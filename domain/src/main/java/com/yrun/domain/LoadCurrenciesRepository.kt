@@ -2,9 +2,10 @@ package com.yrun.domain
 
 interface LoadCurrenciesRepository {
 
-suspend fun loadCurrencies(): LoadCurrenciesResult
+    suspend fun loadCurrencies(): LoadCurrenciesResult
 
 }
+
 interface LoadCurrenciesResult {
 
     fun map(mapper: Mapper)
