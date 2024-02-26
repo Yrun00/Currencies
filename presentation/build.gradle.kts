@@ -8,7 +8,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.yrun.presentation"
+    namespace = "com.yrun.data"
     compileSdk = 34
 
     defaultConfig {
@@ -27,6 +27,10 @@ android {
             )
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
     buildFeatures {
         viewBinding = true
     }
@@ -34,7 +38,6 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-
 
     api("androidx.core:core-ktx:1.12.0")
     api("androidx.appcompat:appcompat:1.6.1")
