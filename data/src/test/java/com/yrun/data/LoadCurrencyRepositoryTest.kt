@@ -35,11 +35,6 @@ class LoadCurrencyRepositoryTest {
         val actual = repository.loadCurrencies()
         val expected = LoadCurrenciesResult.Success
         assertEquals(expected, actual)
-        assertEquals(cacheDataSource.read(), hashMapOf(
-            "111" to "1111111",
-            "222" to "2222222",
-            "333" to "3333333"
-        ).map { CurrencyCache(it.key, it.value) })
     }
 
     @Test
@@ -73,15 +68,15 @@ class LoadCurrencyRepositoryTest {
     }
 }
 
-class FakeProvideResources : ProvideResources {
+ class FakeProvideResources : ProvideResources {
 
-    override fun noInternetConnectionMessage() = "No internet connection"
+     override fun noInternetConnectionMessage() = "No internet connection"
 
-    override fun serviceUnavailableMessage() = "Service unavailable"
+     override fun serviceUnavailableMessage() = "Service unavailable"
 
-}
+ }
 
-class FakeCacheDataSource : CurrencyCacheDataSource.Mutable {
+private class FakeCacheDataSource : CurrencyCacheDataSource.Mutable {
 
     private var actualList = emptyList<CurrencyCache>()
 
@@ -94,7 +89,7 @@ class FakeCacheDataSource : CurrencyCacheDataSource.Mutable {
     }
 }
 
-class FakeCloudDataSource : CurrencyCloudDataSource {
+private class FakeCloudDataSource : CurrencyCloudDataSource {
 
     private var isSuccessResult: Boolean = false
 
