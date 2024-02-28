@@ -12,6 +12,7 @@ interface CurrencyCacheDataSource {
     interface Mutable : Save, Read
 
     class Base(private val currencyDao: CurrencyDao) : Mutable {
+
         override suspend fun save(currencyList: List<CurrencyCache>) {
             currencyDao.insert(currencyList)
         }

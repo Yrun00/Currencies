@@ -10,7 +10,7 @@ import com.yrun.presentation.main.CustomViewModel
 
 abstract class BaseFragment<T : ViewBinding, VM : CustomViewModel> : Fragment() {
     private var _binding: T? = null
-    protected val binding: T = _binding!!
+    protected val binding: T get() = _binding!!
     protected lateinit var viewModel: VM
     protected abstract val viewModelClass: Class<VM>
 
