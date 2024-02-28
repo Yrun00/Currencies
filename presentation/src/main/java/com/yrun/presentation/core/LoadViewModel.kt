@@ -1,7 +1,7 @@
 package com.yrun.presentation.core
 
-import com.yrun.domain.LoadCurrenciesRepository
-import com.yrun.domain.LoadCurrenciesResult
+import com.yrun.domain.load.LoadCurrenciesRepository
+import com.yrun.domain.load.LoadCurrenciesResult
 import com.yrun.presentation.load.BaseLoadResultMapper
 import com.yrun.presentation.load.LoadUiState
 import com.yrun.presentation.main.BaseViewModel

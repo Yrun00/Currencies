@@ -4,7 +4,7 @@ import com.yrun.data.cache.CurrencyCache
 import com.yrun.data.cache.CurrencyCacheDataSource
 import com.yrun.data.cloud.CurrencyCloudDataSource
 import com.yrun.data.core.ProvideResources
-import com.yrun.domain.LoadCurrenciesResult
+import com.yrun.domain.load.LoadCurrenciesResult
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before

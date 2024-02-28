@@ -1,10 +1,4 @@
-package com.yrun.domain
-
-interface LoadCurrenciesRepository {
-
-    suspend fun loadCurrencies(): LoadCurrenciesResult
-
-}
+package com.yrun.domain.load
 
 interface LoadCurrenciesResult {
 

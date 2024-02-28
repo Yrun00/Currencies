@@ -1,7 +1,7 @@
 package com.yrun.presentation
 
-import com.yrun.domain.LoadCurrenciesRepository
-import com.yrun.domain.LoadCurrenciesResult
+import com.yrun.domain.load.LoadCurrenciesRepository
+import com.yrun.domain.load.LoadCurrenciesResult
 
 class FakeLoadCurrenciesRepository : LoadCurrenciesRepository {
 
