@@ -21,7 +21,7 @@ class LoadModule(
             repository = provideInstance.provideLoadRepository(
                 provideResources = core.provideResources(),
                 cacheDataSource = CurrencyCacheDataSource.Base(
-                    core.provideDataBase().currencyDao()
+                    core.provideCurrencyDataBase().currencyDao()
                 ),
                 cloudDataSource = CurrencyCloudDataSource.Base()
             ),
