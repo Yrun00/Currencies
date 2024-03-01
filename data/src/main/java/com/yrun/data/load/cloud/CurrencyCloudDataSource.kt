@@ -1,4 +1,4 @@
-package com.yrun.data.cloud
+package com.yrun.data.load.cloud
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

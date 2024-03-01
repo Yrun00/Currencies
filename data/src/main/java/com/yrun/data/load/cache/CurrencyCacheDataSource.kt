@@ -1,4 +1,4 @@
-package com.yrun.data.cache
+package com.yrun.data.load.cache
 
 interface CurrencyCacheDataSource {
     interface Save {

@@ -1,4 +1,4 @@
-package com.yrun.presentation
+package com.yrun.presentation.load
 
 import com.yrun.domain.load.LoadCurrenciesRepository
 import com.yrun.domain.load.LoadCurrenciesResult

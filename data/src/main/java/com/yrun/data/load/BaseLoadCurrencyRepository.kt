@@ -1,17 +1,16 @@
-package com.yrun.data
+package com.yrun.data.load
 
-import com.yrun.data.cache.CurrencyCache
-import com.yrun.data.cache.CurrencyCacheDataSource
-import com.yrun.data.cloud.CurrencyCloudDataSource
-import com.yrun.data.core.ProvideResources
+import com.yrun.data.core.HandleError
+import com.yrun.data.load.cache.CurrencyCache
+import com.yrun.data.load.cache.CurrencyCacheDataSource
+import com.yrun.data.load.cloud.CurrencyCloudDataSource
 import com.yrun.domain.load.LoadCurrenciesRepository
 import com.yrun.domain.load.LoadCurrenciesResult
-import java.net.UnknownHostException
 
 class BaseLoadCurrencyRepository(
     private val currencyCacheDataSource: CurrencyCacheDataSource.Mutable,
     private val currencyCloudDataSource: CurrencyCloudDataSource,
-    private val provideResources: ProvideResources
+    private val handleError: HandleError
 ) : LoadCurrenciesRepository {
 
     override suspend fun loadCurrencies(): LoadCurrenciesResult = try {
@@ -23,12 +22,7 @@ class BaseLoadCurrencyRepository(
             currencyCacheDataSource.save(currencies)
         }
         LoadCurrenciesResult.Success
-    } catch (e: Exception) {
-        LoadCurrenciesResult.Error(
-            if (e is UnknownHostException) {
-                provideResources.noInternetConnectionMessage()
-            } else
-                provideResources.serviceUnavailableMessage()
-        )
+    } catch (error: Exception) {
+        LoadCurrenciesResult.Error(handleError.handleError(error))
     }
 }

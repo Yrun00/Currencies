@@ -1,4 +1,4 @@
-package com.yrun.data.cache
+package com.yrun.data.load.cache
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

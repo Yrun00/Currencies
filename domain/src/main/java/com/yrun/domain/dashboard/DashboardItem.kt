@@ -4,17 +4,17 @@ interface DashboardItem {
 
     interface Mapper<T : Any> {
 
-        fun map(fromCurrency: String, toCurrency: String, rates: Double): T
+        fun map(fromCurrency: String, toCurrency: String, rate: Double): T
     }
 
     fun <T : Any> map(mapper: Mapper<T>): T
 
     data class Base(
-        private val fromCurrency: String,
         private val toCurrency: String,
-        private val rates: Double
+        private val fromCurrency: String,
+        private val rate: Double
     ) : DashboardItem {
         override fun <T : Any> map(mapper: Mapper<T>): T =
-            mapper.map(fromCurrency, toCurrency, rates)
+            mapper.map(toCurrency, fromCurrency, rate)
     }
 }

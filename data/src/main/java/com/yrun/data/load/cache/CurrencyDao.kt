@@ -1,4 +1,4 @@
-package com.yrun.data.cache
+package com.yrun.data.load.cache
 
 import androidx.room.Dao
 import androidx.room.Insert

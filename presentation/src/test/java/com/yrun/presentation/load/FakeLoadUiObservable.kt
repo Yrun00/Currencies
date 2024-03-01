@@ -1,8 +1,7 @@
-package com.yrun.presentation
+package com.yrun.presentation.load
 
 import com.yrun.presentation.core.UiObservable
 import com.yrun.presentation.core.UpdateUi
-import com.yrun.presentation.load.LoadUiState
 
 class FakeLoadUiObservable : UiObservable<LoadUiState> {
 

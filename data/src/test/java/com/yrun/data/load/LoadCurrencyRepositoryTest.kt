@@ -1,9 +1,10 @@
-package com.yrun.data
+package com.yrun.data.load
 
-import com.yrun.data.cache.CurrencyCache
-import com.yrun.data.cache.CurrencyCacheDataSource
-import com.yrun.data.cloud.CurrencyCloudDataSource
+import com.yrun.data.core.HandleError
 import com.yrun.data.core.ProvideResources
+import com.yrun.data.load.cache.CurrencyCache
+import com.yrun.data.load.cache.CurrencyCacheDataSource
+import com.yrun.data.load.cloud.CurrencyCloudDataSource
 import com.yrun.domain.load.LoadCurrenciesResult
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -16,15 +17,19 @@ class LoadCurrencyRepositoryTest {
     private lateinit var cloudDataSource: FakeCloudDataSource
     private lateinit var repository: BaseLoadCurrencyRepository
     private lateinit var cacheDataSource: FakeCacheDataSource
+    private lateinit var handleError: HandleError
+    private lateinit var provideResources: FakeProvideResources
 
     @Before
     fun setup() {
         cloudDataSource = FakeCloudDataSource()
+        provideResources = FakeProvideResources()
+        handleError = HandleError.Base(provideResources)
         cacheDataSource = FakeCacheDataSource()
         repository = BaseLoadCurrencyRepository(
             currencyCacheDataSource = cacheDataSource,
             currencyCloudDataSource = cloudDataSource,
-            provideResources = FakeProvideResources()
+            handleError = handleError
         )
     }
 
@@ -52,7 +57,7 @@ class LoadCurrencyRepositoryTest {
     }
 
     @Test
-    fun noConnection() = runBlocking{
+    fun noConnection() = runBlocking {
         cloudDataSource.expectException(UnknownHostException())
         val actual = repository.loadCurrencies()
         val expected = LoadCurrenciesResult.Error("No internet connection")
@@ -60,7 +65,7 @@ class LoadCurrencyRepositoryTest {
     }
 
     @Test
-    fun serviceUnavailable() = runBlocking{
+    fun serviceUnavailable() = runBlocking {
         cloudDataSource.expectException(IllegalStateException())
         val actual = repository.loadCurrencies()
         val expected = LoadCurrenciesResult.Error("Service unavailable")
@@ -68,13 +73,13 @@ class LoadCurrencyRepositoryTest {
     }
 }
 
- class FakeProvideResources : ProvideResources {
+class FakeProvideResources : ProvideResources {
 
-     override fun noInternetConnectionMessage() = "No internet connection"
+    override fun noInternetConnectionMessage() = "No internet connection"
 
-     override fun serviceUnavailableMessage() = "Service unavailable"
+    override fun serviceUnavailableMessage() = "Service unavailable"
 
- }
+}
 
 private class FakeCacheDataSource : CurrencyCacheDataSource.Mutable {
 

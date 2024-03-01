@@ -1,8 +1,7 @@
-package com.yrun.presentation
+package com.yrun.presentation.main
 
+import com.yrun.presentation.FakeNavigation
 import com.yrun.presentation.load.LoadScreen
-import com.yrun.presentation.main.MainViewModel
-import com.yrun.presentation.main.Screen
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

@@ -4,20 +4,20 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.yrun.data.cache.CurrencyCache
-import com.yrun.data.cache.CurrencyDao
-import com.yrun.data.cache.CurrencyDatabase
+import com.yrun.data.load.cache.CurrencyCache
+import com.yrun.data.load.cache.CurrencyDao
+import com.yrun.data.load.cache.CurrencyDatabase
 import kotlinx.coroutines.runBlocking
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
-import org.junit.Assert.assertEquals
 
 
 @RunWith(AndroidJUnit4::class)
-class RoomTest {
+class RoomTestCurrencyDao {
 
     private lateinit var db: CurrencyDatabase
     private lateinit var dao: CurrencyDao

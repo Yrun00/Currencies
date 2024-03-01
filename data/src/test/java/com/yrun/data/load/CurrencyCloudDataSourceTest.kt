@@ -1,6 +1,6 @@
-package com.yrun.data
+package com.yrun.data.load
 
-import com.yrun.data.cloud.CurrencyCloudDataSource
+import com.yrun.data.load.cloud.CurrencyCloudDataSource
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -9,10 +9,8 @@ import org.junit.Test
 class CurrencyCloudDataSourceTest {
 
     @Test
-    fun serviceTest() = runBlocking {
-
+    fun currencyServiceTest() = runBlocking {
         val actual = CurrencyCloudDataSource.Base().currencies()
         assertEquals(true, actual.isNotEmpty())
-
     }
 }
