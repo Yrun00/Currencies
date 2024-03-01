@@ -2,8 +2,8 @@ package com.yrun.currencies
 
 import android.content.Context
 import androidx.room.Room
-import com.yrun.data.cache.CurrencyDatabase
 import com.yrun.data.core.ProvideResources
+import com.yrun.data.load.cache.CurrencyDatabase
 import com.yrun.presentation.main.Navigation
 import com.yrun.presentation.main.RunAsync
 

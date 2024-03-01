@@ -1,9 +1,9 @@
 package com.yrun.currencies
 
-import com.yrun.data.BaseLoadCurrencyRepository
-import com.yrun.data.cache.CurrencyCacheDataSource
-import com.yrun.data.cloud.CurrencyCloudDataSource
 import com.yrun.data.core.ProvideResources
+import com.yrun.data.load.BaseLoadCurrencyRepository
+import com.yrun.data.load.cache.CurrencyCacheDataSource
+import com.yrun.data.load.cloud.CurrencyCloudDataSource
 import com.yrun.domain.load.LoadCurrenciesRepository
 
 interface ProvideInstance {

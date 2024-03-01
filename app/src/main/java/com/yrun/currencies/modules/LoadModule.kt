@@ -2,8 +2,8 @@ package com.yrun.currencies.modules
 
 import com.yrun.currencies.Core
 import com.yrun.currencies.ProvideInstance
-import com.yrun.data.cache.CurrencyCacheDataSource
-import com.yrun.data.cloud.CurrencyCloudDataSource
+import com.yrun.data.load.cache.CurrencyCacheDataSource
+import com.yrun.data.load.cloud.CurrencyCloudDataSource
 import com.yrun.presentation.core.LoadViewModel
 import com.yrun.presentation.load.LoadUiObservable
 import com.yrun.presentation.main.Clear
