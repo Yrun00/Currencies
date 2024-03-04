@@ -3,7 +3,6 @@ package com.yrun.presentation.load
 import com.yrun.presentation.FakeClear
 import com.yrun.presentation.FakeNavigation
 import com.yrun.presentation.FakeRunAsync
-import com.yrun.presentation.core.LoadViewModel
 import com.yrun.presentation.dashboard.DashboardScreen
 import org.junit.Assert
 import org.junit.Before

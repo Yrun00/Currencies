@@ -1,7 +1,6 @@
 package com.yrun.presentation.load
 
 import com.yrun.domain.load.LoadCurrenciesResult
-import com.yrun.presentation.core.LoadViewModel
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.dashboard.DashboardScreen
 import com.yrun.presentation.main.Clear

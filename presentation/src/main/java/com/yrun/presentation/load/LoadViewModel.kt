@@ -1,9 +1,9 @@
-package com.yrun.presentation.core
+package com.yrun.presentation.load
 
 import com.yrun.domain.load.LoadCurrenciesRepository
 import com.yrun.domain.load.LoadCurrenciesResult
-import com.yrun.presentation.load.BaseLoadResultMapper
-import com.yrun.presentation.load.LoadUiState
+import com.yrun.presentation.core.UiObservable
+import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.main.BaseViewModel
 import com.yrun.presentation.main.Clear
 import com.yrun.presentation.main.Navigation
