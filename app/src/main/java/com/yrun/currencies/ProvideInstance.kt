@@ -1,5 +1,6 @@
 package com.yrun.currencies
 
+import com.yrun.data.core.HandleError
 import com.yrun.data.core.ProvideResources
 import com.yrun.data.load.BaseLoadCurrencyRepository
 import com.yrun.data.load.cache.CurrencyCacheDataSource
@@ -11,18 +12,20 @@ interface ProvideInstance {
     fun provideLoadRepository(
         cacheDataSource: CurrencyCacheDataSource.Mutable,
         provideResources: ProvideResources,
-        cloudDataSource: CurrencyCloudDataSource
+        cloudDataSource: CurrencyCloudDataSource,
+        handleError: HandleError.Base
     ): LoadCurrenciesRepository
 
     class Base : ProvideInstance {
         override fun provideLoadRepository(
             cacheDataSource: CurrencyCacheDataSource.Mutable,
             provideResources: ProvideResources,
-            cloudDataSource: CurrencyCloudDataSource
+            cloudDataSource: CurrencyCloudDataSource,
+            handleError: HandleError.Base
         ) = BaseLoadCurrencyRepository(
             currencyCacheDataSource = cacheDataSource,
             currencyCloudDataSource = cloudDataSource,
-            provideResources = provideResources
+            handleError = HandleError.Base(provideResources)
         )
     }
 }

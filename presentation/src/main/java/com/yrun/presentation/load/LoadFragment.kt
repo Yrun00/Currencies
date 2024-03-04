@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.yrun.data.databinding.FragmentProgressBinding
 import com.yrun.presentation.core.BaseFragment
-import com.yrun.presentation.core.LoadViewModel
 import com.yrun.presentation.core.UpdateUi
 
 

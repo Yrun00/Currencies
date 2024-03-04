@@ -2,7 +2,7 @@ package com.yrun.currencies.modules
 
 import com.yrun.currencies.Core
 import com.yrun.currencies.ProvideInstance
-import com.yrun.presentation.core.LoadViewModel
+import com.yrun.presentation.load.LoadViewModel
 import com.yrun.presentation.main.Clear
 import com.yrun.presentation.main.CustomViewModel
 import com.yrun.presentation.main.MainViewModel
