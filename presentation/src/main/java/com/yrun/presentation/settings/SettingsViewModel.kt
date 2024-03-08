@@ -1,6 +1,7 @@
 package com.yrun.presentation.settings
 
 import com.yrun.domain.settings.SettingsRepository
+import com.yrun.presentation.core.BundleWrapper
 import com.yrun.presentation.core.UiObservable
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.dashboard.DashboardScreen
@@ -18,17 +19,32 @@ class SettingsViewModel(
     private val observable: UiObservable<SettingsUiState>,
 ) : BaseViewModel(runAsync), CurrencyChoice {
 
-    fun init() {
-
-        runAsync({
-            repository.allCurrencies()
-        }) { currencies ->
-            val listCurrencies = currencies.map {
-                ChoiceUi.Base(isSelected = false, currency = it)
+    fun init(bundleWrapper: BundleWrapper.Mutable) {
+        if (bundleWrapper.isEmpty()) {
+            runAsync({
+                repository.allCurrencies()
+            }) { currencies ->
+                val listCurrencies = currencies.map {
+                    ChoiceUi.Base(isSelected = false, currency = it)
+                }
+                observable.updateUi(SettingsUiState.Initial(listCurrencies))
             }
-            observable.updateUi(SettingsUiState.Initial(listCurrencies))
+        } else {
+            val chosenFrom = bundleWrapper.restoreFrom()
+            val chosenTo = bundleWrapper.restoreTo()
+            val isChosenFrom = chosenFrom.isNotEmpty()
+            val isChosenTo = chosenTo.isNotEmpty()
+
+            if (isChosenTo && isChosenFrom) chooseToCurrency(
+                fromCurrency = chosenFrom,
+                toCurrency = chosenTo
+            )
+
+            if (isChosenFrom && !isChosenTo) chooseFromCurrency(currency = chosenFrom)
+
         }
     }
+
 
     fun backToDashboard() {
         navigation.updateUi(DashboardScreen)

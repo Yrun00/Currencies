@@ -4,6 +4,7 @@ import com.yrun.domain.settings.SettingsRepository
 import com.yrun.presentation.FakeClear
 import com.yrun.presentation.FakeNavigation
 import com.yrun.presentation.FakeRunAsync
+import com.yrun.presentation.core.BundleWrapper
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.dashboard.DashboardScreen
 import com.yrun.presentation.settings.adapter.ChoiceUi
@@ -40,7 +41,7 @@ class SettingsViewModelTest {
 
     @Test
     fun scenarioTest() {
-        viewModel.init()
+        viewModel.init(BundleWrapper.Base(bundle = null))
         runAsync.returnResult()
         uiObservable.check(
             listOf(
@@ -107,6 +108,7 @@ class SettingsViewModelTest {
         uiObservable.checkEmpty(observer)
     }
 }
+
 
 class FakeSettingsUiObservable : SettingsUiObservable {
 
