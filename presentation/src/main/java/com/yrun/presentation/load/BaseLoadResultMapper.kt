@@ -8,7 +8,7 @@ import com.yrun.presentation.main.Navigation
 
 class BaseLoadResultMapper(
     private val observable: UpdateUi<LoadUiState>,
-    private val navigation: Navigation,
+    private val navigation: Navigation.Navigate,
     private val clear: Clear
 ) : LoadCurrenciesResult.Mapper {
 

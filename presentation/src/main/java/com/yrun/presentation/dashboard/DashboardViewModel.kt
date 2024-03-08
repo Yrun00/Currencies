@@ -2,6 +2,7 @@ package com.yrun.presentation.dashboard
 
 import com.yrun.domain.dashboard.DashboardRepository
 import com.yrun.domain.dashboard.DashboardResult
+import com.yrun.presentation.core.UiObservable
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.main.BaseViewModel
 import com.yrun.presentation.main.Clear
@@ -10,14 +11,13 @@ import com.yrun.presentation.main.RunAsync
 import com.yrun.presentation.settings.SettingsScreen
 
 class DashboardViewModel(
-    private val navigation: Navigation,
+    private val navigation: Navigation.Navigate,
     runAsync: RunAsync,
     private val clear: Clear,
     private val repository: DashboardRepository,
-    private val observable: DashboardUiObservable,
+    private val observable: UiObservable<DashboardUiState>,
     private val mapper: DashboardResult.Mapper = BaseDashboardResultMapper(observable)
-) :
-    BaseViewModel(runAsync), ClickActions {
+) : BaseViewModel(runAsync), ClickActions {
 
     fun load() {
         observable.updateUi(DashboardUiState.Progress)
@@ -32,7 +32,7 @@ class DashboardViewModel(
 
     fun goToSettings() {
         navigation.updateUi(SettingsScreen)
-        clear.clear(this::class.java)
+        clear.clear(DashboardViewModel::class.java)
     }
 
     fun startGettingUpdates(observer: UpdateUi<DashboardUiState>) {

@@ -2,4 +2,8 @@
     <string name="app_name">presentation</string>
     <string name="retry">Retry</string>
     <string name="settings">settings</string>
+    <string name="no_more_currencies_available">No more currencies available</string>
+    <string name="go_to_settings_and_add_new_pair">Go to settings and add new pair</string>
+    <string name="save_settings">Save settings</string>
+    <string name="back">back</string>
 </resources>

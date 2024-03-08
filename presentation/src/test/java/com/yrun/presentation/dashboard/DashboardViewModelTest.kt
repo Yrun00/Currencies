@@ -7,6 +7,7 @@ import com.yrun.presentation.FakeClear
 import com.yrun.presentation.FakeNavigation
 import com.yrun.presentation.FakeRunAsync
 import com.yrun.presentation.core.UpdateUi
+import com.yrun.presentation.dashboard.adapter.DashboardUi
 import com.yrun.presentation.settings.SettingsScreen
 import org.junit.Assert
 import org.junit.Before
@@ -69,7 +70,7 @@ class DashboardViewModelTest {
                 DashboardUiState.Progress,
                 DashboardUiState.Error("No internet"),
                 DashboardUiState.Progress,
-                DashboardUiState.Base(pairs = listOf(DashboardUi.Success("USD/EUR", "1.1")))
+                DashboardUiState.Base(pairs = listOf(DashboardUi.Success("USD/EUR", "1,10")))
             )
         )
     }

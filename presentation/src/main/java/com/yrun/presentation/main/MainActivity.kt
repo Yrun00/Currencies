@@ -2,7 +2,6 @@ package com.yrun.presentation.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.yrun.data.R
 import com.yrun.data.databinding.ActivityMainBinding
 import com.yrun.presentation.core.ProvideViewModel
 import com.yrun.presentation.core.UpdateUi
@@ -11,7 +10,6 @@ class MainActivity : AppCompatActivity(), ProvideViewModel {
 
     private lateinit var navigationObserver: UpdateUi<Screen>
     private lateinit var viewModel: MainViewModel
-    private lateinit var binding: ActivityMainBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +21,7 @@ class MainActivity : AppCompatActivity(), ProvideViewModel {
 
         navigationObserver = object : UpdateUi<Screen> {
             override fun updateUi(uiState: Screen) {
-                uiState.show(R.id.container, supportFragmentManager)
+                uiState.show(binding.container.id, supportFragmentManager)
             }
         }
         viewModel.init(isFirsRun = savedInstanceState == null)

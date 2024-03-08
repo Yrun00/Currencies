@@ -4,7 +4,7 @@ import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.load.LoadScreen
 
 class MainViewModel(
-    private val navigation: Navigation
+    private val navigation: Navigation.Mutable
 ) : CustomViewModel {
 
 

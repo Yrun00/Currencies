@@ -1,13 +1,12 @@
-package com.yrun.presentation.dashboard
+package com.yrun.presentation.settings.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.yrun.presentation.dashboard.adapter.DashboardUi
 
-class PairsDiffUtilCallback(
-    private val oldList: List<DashboardUi>,
-    private val newList: List<DashboardUi>
-) :
-    DiffUtil.Callback() {
+class ChoicesDiffUtil(
+    private val oldList: List<ChoiceUi>,
+    private val newList: List<ChoiceUi>
+) : DiffUtil.Callback() {
+
     override fun getOldListSize() = oldList.size
 
     override fun getNewListSize() = newList.size
@@ -17,5 +16,4 @@ class PairsDiffUtilCallback(
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
         oldList[oldItemPosition] == newList[newItemPosition]
-
 }

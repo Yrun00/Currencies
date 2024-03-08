@@ -1,23 +1,26 @@
-package com.yrun.presentation.dashboard
+package com.yrun.presentation.dashboard.adapter
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.yrun.data.databinding.EmptyBinding
+import com.yrun.data.databinding.EmptyFavoitesBinding
 import com.yrun.data.databinding.ErrorBinding
 import com.yrun.data.databinding.PairBinding
 import com.yrun.data.databinding.ProgressBinding
+import com.yrun.presentation.core.ShowList
+import com.yrun.presentation.dashboard.ClickActions
+import com.yrun.presentation.dashboard.PairsDiffUtilCallback
 
 class DashboardAdapter(
     private val clickListener: ClickActions,
-    private val types: List<TypeUi> = listOf(
-        TypeUi.Success,
-        TypeUi.Progress,
-        TypeUi.Error,
-        TypeUi.Empty
+    private val types: List<DashboardTypeUi> = listOf(
+        DashboardTypeUi.Success,
+        DashboardTypeUi.Progress,
+        DashboardTypeUi.Error,
+        DashboardTypeUi.Empty
     )
-) : RecyclerView.Adapter<DashboardAdapter.DashboardViewHolder>(), ShowList {
+) : RecyclerView.Adapter<DashboardAdapter.DashboardViewHolder>(), ShowList<DashboardUi> {
 
     private val pairs = mutableListOf<DashboardUi>()
 
@@ -29,6 +32,13 @@ class DashboardAdapter(
         diffResult.dispatchUpdatesTo(this)
     }
 
+    override fun getItemViewType(position: Int): Int {
+        val type = pairs[position].type()
+        val index = types.indexOf(type)
+        if (index == -1)
+            throw IllegalStateException("Type $type is not included in the typeList $types")
+        return index
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         types[viewType].viewHolder(parent, clickListener)
@@ -43,7 +53,7 @@ class DashboardAdapter(
 
         open fun bind(item: DashboardUi) = Unit
 
-        class Empty(binding: EmptyBinding) : DashboardViewHolder(binding.root)
+        class Empty(binding: EmptyFavoitesBinding) : DashboardViewHolder(binding.root)
 
         class Progress(binding: ProgressBinding) : DashboardViewHolder(binding.root)
 

@@ -4,7 +4,7 @@ import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.main.Navigation
 import com.yrun.presentation.main.Screen
 
-class FakeNavigation : Navigation {
+class FakeNavigation : Navigation.Mutable {
 
     var actual: Screen = Screen.Empty
     var observer: UpdateUi<Screen> = UpdateUi.Empty()
@@ -17,5 +17,4 @@ class FakeNavigation : Navigation {
     override fun updateUi(uiState: Screen) {
         actual = uiState
     }
-
 }

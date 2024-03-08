@@ -1,4 +1,4 @@
-package com.yrun.presentation.dashboard
+package com.yrun.presentation.dashboard.adapter
 
 import com.yrun.data.databinding.ErrorBinding
 import com.yrun.data.databinding.PairBinding
@@ -6,7 +6,7 @@ import com.yrun.data.databinding.PairBinding
 interface DashboardUi {
 
     fun id(): String
-    fun type(): TypeUi
+    fun type(): DashboardTypeUi
     fun show(binding: PairBinding) = Unit
     fun show(errorBinding: ErrorBinding) = Unit
 
@@ -16,7 +16,7 @@ interface DashboardUi {
 
         override fun id(): String = pair
 
-        override fun type(): TypeUi = TypeUi.Success
+        override fun type(): DashboardTypeUi = DashboardTypeUi.Success
 
         override fun show(binding: PairBinding) = with(binding) {
             pairText.text = pair
@@ -28,7 +28,7 @@ interface DashboardUi {
 
         override fun id(): String = "empty"
 
-        override fun type(): TypeUi = TypeUi.Empty
+        override fun type(): DashboardTypeUi = DashboardTypeUi.Empty
 
     }
 
@@ -36,7 +36,7 @@ interface DashboardUi {
 
         override fun id(): String = "progress"
 
-        override fun type(): TypeUi = TypeUi.Progress
+        override fun type(): DashboardTypeUi = DashboardTypeUi.Progress
 
     }
 
@@ -44,7 +44,7 @@ interface DashboardUi {
 
         override fun id(): String = "error"
 
-        override fun type(): TypeUi = TypeUi.Error
+        override fun type(): DashboardTypeUi = DashboardTypeUi.Error
 
         override fun show(errorBinding: ErrorBinding) {
             errorBinding.errorTextView.text = message

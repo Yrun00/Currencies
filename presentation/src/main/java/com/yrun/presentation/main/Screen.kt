@@ -2,7 +2,6 @@ package com.yrun.presentation.main
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-
 interface Screen {
 
     fun show(container: Int, supportFragmentManager: FragmentManager)
