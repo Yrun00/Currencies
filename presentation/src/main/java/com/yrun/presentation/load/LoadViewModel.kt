@@ -12,7 +12,7 @@ import com.yrun.presentation.main.RunAsync
 class LoadViewModel(
     private val repository: LoadCurrenciesRepository,
     private val uiObservable: UiObservable<LoadUiState>,
-    private val navigation: Navigation,
+    private val navigation: Navigation.Navigate,
     private val clear: Clear,
     runAsync: RunAsync,
     private val mapper: LoadCurrenciesResult.Mapper = BaseLoadResultMapper(
@@ -40,6 +40,6 @@ class LoadViewModel(
     }
 
     fun stopGettingUpdates() {
-        navigation.updateObserver(UpdateUi.Empty())
+        uiObservable.updateObserver(UpdateUi.Empty())
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.yrun.data.databinding.FragmentDashboardBinding
 import com.yrun.presentation.core.BaseFragment
 import com.yrun.presentation.core.UpdateUi
+import com.yrun.presentation.dashboard.adapter.DashboardAdapter
 
 class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewModel>() {
 
