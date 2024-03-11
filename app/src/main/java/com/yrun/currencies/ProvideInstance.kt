@@ -30,7 +30,7 @@ interface ProvideInstance {
 
     fun provideDashboardRepository(
         dashboardItemDataSource: DashboardItemsDataSource,
-        favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Read,
+        favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
         handleError: HandleError.Base
     ): DashboardRepository
 
@@ -56,7 +56,7 @@ interface ProvideInstance {
 
         override fun provideDashboardRepository(
             dashboardItemDataSource: DashboardItemsDataSource,
-            favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Read,
+            favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
             handleError: HandleError.Base
         ): DashboardRepository =
             BaseDashboardRepository(

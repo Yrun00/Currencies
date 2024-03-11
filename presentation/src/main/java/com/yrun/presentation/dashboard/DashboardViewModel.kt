@@ -16,7 +16,8 @@ class DashboardViewModel(
     private val clear: Clear,
     private val repository: DashboardRepository,
     private val observable: UiObservable<DashboardUiState>,
-    private val mapper: DashboardResult.Mapper = BaseDashboardResultMapper(observable)
+    private val mapper: DashboardResult.Mapper,
+    private val derive: CurrencyPairUi.Derive
 ) : BaseViewModel(runAsync), ClickActions {
 
     fun load() {
@@ -26,8 +27,13 @@ class DashboardViewModel(
         }) { it.map(mapper) }
     }
 
-    override fun retry() {
-        load()
+    override fun retry() = load()
+
+    override fun deletePair(pairUi: String) {
+        runAsync({
+            val (from, to) = derive.derive(pairUi)
+            repository.deletePair(from = from, to = to)
+        }) { it.map(mapper) }
     }
 
     fun goToSettings() {

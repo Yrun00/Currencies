@@ -21,6 +21,10 @@ class DashboardViewModelTest {
     private lateinit var navigation: FakeNavigation
     private lateinit var runAsync: FakeRunAsync
     private lateinit var uiObservable: FakeDashboardUiObservable
+    private lateinit var derive: CurrencyPairUi.Derive
+    private lateinit var mapper: BaseDashboardResultMapper
+    private lateinit var dashboardItemMapper: BaseDashboardItemMapper
+    private lateinit var concat: CurrencyPairUi.Concat
 
     @Before
     fun setup() {
@@ -29,17 +33,22 @@ class DashboardViewModelTest {
         navigation = FakeNavigation()
         runAsync = FakeRunAsync()
         uiObservable = FakeDashboardUiObservable()
+        concat = CurrencyPairUi.Base()
+        dashboardItemMapper = BaseDashboardItemMapper(concat)
         viewModel = DashboardViewModel(
             repository = repository,
             clear = clear,
             navigation = navigation,
             runAsync = runAsync,
-            observable = uiObservable
+            observable = uiObservable,
+            derive = CurrencyPairUi.Base(),
+            mapper = BaseDashboardResultMapper(uiObservable, dashboardItemMapper)
+
         )
     }
 
     @Test
-    fun testErrorThenSuccess() {
+    fun testErrorThenSuccessThenDeletePair() {
         repository.expectResult(DashboardResult.Error("No internet"))
         viewModel.load()
         uiObservable.check(
@@ -70,9 +79,22 @@ class DashboardViewModelTest {
                 DashboardUiState.Progress,
                 DashboardUiState.Error("No internet"),
                 DashboardUiState.Progress,
-                DashboardUiState.Base(pairs = listOf(DashboardUi.Success("USD/EUR", "1,10")))
+                DashboardUiState.Base(pairs = listOf(DashboardUi.Success("EUR/USD", "1,10")))
             )
         )
+        viewModel.deletePair("EUR/USD")
+        runAsync.returnResult()
+        uiObservable.check(
+            listOf(
+                DashboardUiState.Progress,
+                DashboardUiState.Error("No internet"),
+                DashboardUiState.Progress,
+                DashboardUiState.Base(pairs = listOf(DashboardUi.Success("EUR/USD", "1,10"))),
+                DashboardUiState.Empty
+
+            )
+        )
+
     }
 
     @Test
@@ -109,6 +131,11 @@ class FakeDashboardRepository : DashboardRepository {
     private lateinit var actual: DashboardResult
 
     override suspend fun dashboard(): DashboardResult {
+        return actual
+    }
+
+    override suspend fun deletePair(from: String, to: String): DashboardResult {
+        actual = DashboardResult.Empty
         return actual
     }
 

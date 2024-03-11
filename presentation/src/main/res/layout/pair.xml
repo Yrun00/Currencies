@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal">
 
     <TextView
-        tools:text="USD/EUR"
+        android:id="@+id/pairText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/pairText" />
+        android:justificationMode="inter_word"
+        tools:text="USD/EUR" />
 
     <TextView
-        tools:text="1.44"
+        android:id="@+id/rateText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:id="@+id/rateText" />
+        android:justificationMode="inter_word"
+        tools:text="1.44" />
+
+    <com.yrun.presentation.core.views.CustomImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/DeletePair"
+        android:src="@drawable/baseline_auto_delete_24"
+        android:id="@+id/DeleteButton" />
 
 </LinearLayout>
 

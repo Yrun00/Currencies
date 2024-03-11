@@ -98,6 +98,10 @@ class FakeFavoritePairsCacheDataSource : FavoritePairsCacheDataSource.Mutable {
     override suspend fun read(): List<PairCache> {
         return actual
     }
+
+    override suspend fun delete(currencyPair: PairCache) {
+        actual.remove(currencyPair)
+    }
 }
 
 class FakeCurrencyDao : CurrencyDao {

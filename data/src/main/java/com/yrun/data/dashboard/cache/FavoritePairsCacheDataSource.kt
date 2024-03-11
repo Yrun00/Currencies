@@ -10,7 +10,12 @@ interface FavoritePairsCacheDataSource {
         suspend fun read(): List<PairCache>
     }
 
-    interface Mutable : Save, Read
+    interface Delete {
+
+        suspend fun delete(currencyPair: PairCache)
+    }
+
+    interface Mutable : Save, Read, Delete
 
     class Base(private val pairDao: PairDao) : Mutable {
 
@@ -20,6 +25,10 @@ interface FavoritePairsCacheDataSource {
 
         override suspend fun read(): List<PairCache> {
             return pairDao.favoritePairs()
+        }
+
+        override suspend fun delete(currencyPair: PairCache) {
+            pairDao.delete(currencyPair)
         }
     }
 }

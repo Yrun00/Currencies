@@ -48,7 +48,6 @@ class DashboardAdapter(
     override fun onBindViewHolder(holder: DashboardViewHolder, position: Int) =
         holder.bind(pairs[position])
 
-
     abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         open fun bind(item: DashboardUi) = Unit
@@ -57,7 +56,10 @@ class DashboardAdapter(
 
         class Progress(binding: ProgressBinding) : DashboardViewHolder(binding.root)
 
-        class Error(private val binding: ErrorBinding, private val clickListener: ClickActions) :
+        class Error(
+            private val binding: ErrorBinding,
+            private val clickListener: ClickActions
+        ) :
             DashboardViewHolder(binding.root) {
 
             override fun bind(item: DashboardUi) {
@@ -66,10 +68,16 @@ class DashboardAdapter(
             }
         }
 
-        class Base(private val binding: PairBinding) :
-            DashboardViewHolder(binding.root) {
+        class Base(
+            private val binding: PairBinding, private val clickListener: ClickActions
+        ) : DashboardViewHolder(binding.root) {
+
             override fun bind(item: DashboardUi) {
                 item.show(binding)
+
+                binding.DeleteButton.setOnClickListener {
+                    clickListener.deletePair(item.id())
+                }
             }
         }
     }

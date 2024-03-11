@@ -51,6 +51,18 @@ class DashboardRepositoryTest {
             ), actual
         )
     }
+
+    @Test
+    fun testDeletePair() = runBlocking {
+        cloudDataSource.save(PairCache("A", "B", 0.0, -2))
+        repository.deletePair("B", "A")
+        Assert.assertEquals(repository.dashboard(), DashboardResult.Empty)
+    }
+
+    @Test
+    fun deleteTest() = runBlocking {
+
+    }
 }
 
 private class FakeHandleError : HandleError {
@@ -78,15 +90,23 @@ private class FakeDashboardItemsDataSource : DashboardItemsDataSource {
     }
 }
 
-private class FakeFavoritePairsCacheDataSource : FavoritePairsCacheDataSource.Read {
+private class FakeFavoritePairsCacheDataSource : FavoritePairsCacheDataSource.Mutable {
 
-    private var list = emptyList<PairCache>()
+    private var list = mutableListOf<PairCache>()
+
+    override suspend fun save(currencyPair: PairCache) {
+        list.add(currencyPair)
+    }
 
     override suspend fun read(): List<PairCache> {
         return list
     }
 
+    override suspend fun delete(currencyPair: PairCache) {
+        list.remove(currencyPair)
+    }
+
     suspend fun notEmpty() {
-        list = listOf<PairCache>(PairCache("A", "B", 0.0, -2))
+        list.add(PairCache("A", "B", 0.0, -2))
     }
 }
