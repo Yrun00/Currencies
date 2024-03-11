@@ -49,5 +49,7 @@ class RoomTestPairDao {
         val expected2 = PairCache("C", "D", 1.0, 25 * 3600 * 1000)
         dao.insert(expected2)
         assertEquals(listOf<PairCache>(expected1, expected2), dao.favoritePairs())
+        dao.delete(expected1)
+        assertEquals(listOf<PairCache>(expected2), dao.favoritePairs())
     }
 }

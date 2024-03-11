@@ -7,7 +7,7 @@ import com.yrun.presentation.dashboard.adapter.DashboardUi
 
 class BaseDashboardResultMapper(
     private val observable: UiObservable<DashboardUiState>,
-    private val dashboardItemMapper: DashboardItem.Mapper<DashboardUi> = BaseDashboardItemMapper()
+    private val dashboardItemMapper: DashboardItem.Mapper<DashboardUi>
 ) : DashboardResult.Mapper {
 
     override fun mapSuccess(listOfItem: List<DashboardItem>) {
@@ -29,10 +29,11 @@ class BaseDashboardResultMapper(
     }
 }
 
-class BaseDashboardItemMapper : DashboardItem.Mapper<DashboardUi> {
+class BaseDashboardItemMapper(private val concat: CurrencyPairUi.Concat) :
+    DashboardItem.Mapper<DashboardUi> {
 
     override fun map(fromCurrency: String, toCurrency: String, rate: Double): DashboardUi {
         val roundedRate = String.format("%.2f", rate)
-        return DashboardUi.Success("$toCurrency / $fromCurrency", roundedRate)
+        return DashboardUi.Success(concat.concat(fromCurrency, toCurrency), roundedRate)
     }
 }

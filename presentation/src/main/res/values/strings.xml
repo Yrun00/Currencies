@@ -6,4 +6,7 @@
     <string name="go_to_settings_and_add_new_pair">Go to settings and add new pair</string>
     <string name="save_settings">Save settings</string>
     <string name="back">back</string>
+    <string name="DeletePair">Delete Pair Button</string>
+    <string name="delete">Delete</string>
+    <string name="deleteQuestion">Are you sure delete %s?</string>
 </resources>

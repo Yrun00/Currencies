@@ -8,7 +8,7 @@ import com.yrun.domain.dashboard.DashboardResult
 
 
 class BaseDashboardRepository(
-    private val favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Read,
+    private val favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
     private val handleError: HandleError,
     private val dashboardItemsDataSource: DashboardItemsDataSource
 ) : DashboardRepository {
@@ -21,5 +21,14 @@ class BaseDashboardRepository(
         } catch (error: Exception) {
             DashboardResult.Error(handleError.handleError(error))
         }
+    }
+
+    override suspend fun deletePair(from: String, to: String): DashboardResult {
+        favoritePairsCacheDataSource.delete(
+            favoritePairsCacheDataSource.read().find {
+                it.fromCurrency == from && it.toCurrency == to
+            }!!
+        )
+        return dashboard()
     }
 }

@@ -22,7 +22,7 @@ interface DashboardTypeUi {
             DashboardAdapter.DashboardViewHolder.Base(
                 PairBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
-                )
+                ), clickActions
             )
     }
 

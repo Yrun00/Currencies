@@ -8,6 +8,9 @@ import com.yrun.data.dashboard.cache.DashboardItemsDataSource
 import com.yrun.data.dashboard.cache.FavoritePairsCacheDataSource
 import com.yrun.data.dashboard.cloud.PairClodDataSource
 import com.yrun.data.dashboard.cloud.UpdatedRateDataSource
+import com.yrun.presentation.dashboard.BaseDashboardItemMapper
+import com.yrun.presentation.dashboard.BaseDashboardResultMapper
+import com.yrun.presentation.dashboard.CurrencyPairUi
 import com.yrun.presentation.dashboard.DashboardUiObservable
 import com.yrun.presentation.dashboard.DashboardViewModel
 import com.yrun.presentation.main.Clear
@@ -24,9 +27,10 @@ class DashboardModule(
         val favoritePairsCacheDataSource = FavoritePairsCacheDataSource.Base(
             pairDao = core.providePairDatabase().pairDao()
         )
+        val observable = DashboardUiObservable.Base()
 
         return DashboardViewModel(
-            observable = DashboardUiObservable.Base(),
+            observable = observable,
             repository = provideInstance.provideDashboardRepository(
                 dashboardItemDataSource = DashboardItemsDataSource.Base(
                     currentTimeInMillis = currentTimeInMillis,
@@ -40,7 +44,12 @@ class DashboardModule(
             ),
             clear = clear,
             navigation = core.provideNavigation(),
-            runAsync = core.provideRunAsync()
+            runAsync = core.provideRunAsync(),
+            derive = CurrencyPairUi.Base(),
+            mapper = BaseDashboardResultMapper(
+                observable = observable,
+                dashboardItemMapper = BaseDashboardItemMapper(concat = CurrencyPairUi.Base())
+            )
         )
     }
 }
