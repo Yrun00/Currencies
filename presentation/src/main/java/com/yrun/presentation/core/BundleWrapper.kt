@@ -6,6 +6,7 @@ interface BundleWrapper {
 
     interface Save {
         fun save(choice: String, key: String)
+
     }
 
     interface Restore {

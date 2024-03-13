@@ -11,7 +11,7 @@ import com.yrun.presentation.main.Clear
 
 class LoadModule(
     private val core: Core,
-    private val provideInstance: ProvideInstance,
+    private val provideInstance: ProvideInstance.ProvideRepository,
     private val clear: Clear
 
 ) : Module<LoadViewModel> {

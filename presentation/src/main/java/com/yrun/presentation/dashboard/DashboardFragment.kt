@@ -37,13 +37,14 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
         binding.settingButton.setOnClickListener {
             viewModel.goToSettings()
         }
-
         updateUi = object : UpdateUi<DashboardUiState> {
             override fun updateUi(uiState: DashboardUiState) {
                 uiState.update(showList = adapter)
             }
         }
+
         viewModel.load()
+
     }
 
     override fun deletePair(pairUi: String) {
@@ -91,4 +92,5 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
     }
 
     override fun retry() = viewModel.retry()
+
 }

@@ -26,3 +26,22 @@ class BaseLoadCurrencyRepository(
         LoadCurrenciesResult.Error(handleError.handleError(error))
     }
 }
+
+class FakeLoadCurrencyRepository(
+    private val currencyCacheDataSource: CurrencyCacheDataSource.Mutable,
+) : LoadCurrenciesRepository {
+
+
+    override suspend fun loadCurrencies(): LoadCurrenciesResult {
+        currencyCacheDataSource.save(
+            listOf<CurrencyCache>(
+                CurrencyCache("USD", "1"),
+                CurrencyCache("EUR", "2"),
+                CurrencyCache("RUB", "3")
+            )
+        )
+        return LoadCurrenciesResult.Success
+
+
+    }
+}

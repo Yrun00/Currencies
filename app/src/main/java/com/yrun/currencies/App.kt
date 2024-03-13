@@ -28,13 +28,20 @@ abstract class App : Application(), ProvideViewModel {
     override fun <T : CustomViewModel> viewModel(viewModelClass: Class<T>): T =
         factory.viewModel(viewModelClass)
 
-    abstract fun provideInstance(): ProvideInstance
+    abstract fun provideInstance(): ProvideInstance.ProvideRepository
 
 }
 
 class Release : App() {
 
-    override fun provideInstance(): ProvideInstance {
+    override fun provideInstance(): ProvideInstance.ProvideRepository {
         return ProvideInstance.Base()
+    }
+}
+
+class Mock : App() {
+
+    override fun provideInstance(): ProvideInstance.ProvideRepository {
+        return ProvideInstance.Fake()
     }
 }
