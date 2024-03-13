@@ -4,6 +4,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.yrun.presentation.main.MainActivity
 import com.yrun.presentation.page_objects.DashboardPage
+import com.yrun.presentation.page_objects.LoadPage
 import com.yrun.presentation.page_objects.SettingsPage
 import com.yrun.presentation.page_objects.SnackbarPage
 import org.junit.Assert.*
@@ -22,24 +23,47 @@ class ScenarioTest {
         val dashboardPage = DashboardPage()
         val settingsPage = SettingsPage()
         val snackbarPage = SnackbarPage()
+        val loadPage = LoadPage()
 
-        dashboardPage.checkErrorVisible("No internet connection")
+        loadPage.checkError("No internet connection")
+        activityScenarioRule.scenario.recreate()
+        loadPage.checkError("No internet connection")
+        loadPage.clickRetry()
         dashboardPage.checkErrorVisible("No internet connection")
         dashboardPage.clickRetry()
+        dashboardPage.checkEmpty()
+        activityScenarioRule.scenario.recreate()
         dashboardPage.checkEmpty()
 
         dashboardPage.clickSettings()
         settingsPage.checkFrom(listOf<String>("USD", "EUR", "RUB"))
+        activityScenarioRule.scenario.recreate()
+        settingsPage.checkFrom(listOf<String>("USD", "EUR", "RUB"))
 
         settingsPage.clickFrom("USD", position = 0)
+        settingsPage.checkFromChosen("USD", position = 0)
+        settingsPage.checkTo(listOf<String>("EUR", "RUB"))
+        activityScenarioRule.scenario.recreate()
         settingsPage.checkFromChosen("USD", position = 0)
         settingsPage.checkTo(listOf<String>("EUR", "RUB"))
 
         settingsPage.clickTo("EUR", position = 0)
         settingsPage.checkFromChosen("USD", position = 0)
         settingsPage.checkToChosen("EUR", position = 0)
+        activityScenarioRule.scenario.recreate()
+        settingsPage.checkFromChosen("USD", position = 0)
+        settingsPage.checkToChosen("EUR", position = 0)
 
         settingsPage.clickSave()
+        dashboardPage.checkPairs(
+            pairs = listOf(
+                com.yrun.presentation.page_objects.SettingsPage.CurrencyPair(
+                    pair = "USD/EUR",
+                    rate = "1.11"
+                )
+            )
+        )
+        activityScenarioRule.scenario.recreate()
         dashboardPage.checkPairs(
             pairs = listOf(
                 com.yrun.presentation.page_objects.SettingsPage.CurrencyPair(
@@ -128,6 +152,8 @@ class ScenarioTest {
         settingsPage.checkTo(listOf<String>("RUB"))
         settingsPage.clickTo("RUB", position = 0)
         settingsPage.checkToChosen("RUB", position = 0)
+        settingsPage.checkSaveVisible()
+        activityScenarioRule.scenario.recreate()
         settingsPage.checkSaveVisible()
         settingsPage.clickGoBack()
         dashboardPage.checkPairs(

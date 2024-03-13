@@ -77,7 +77,8 @@ interface ProvideInstance {
             cloudDataSource: CurrencyCloudDataSource,
             handleError: HandleError.Base
         ): LoadCurrenciesRepository = FakeLoadCurrencyRepository(
-            currencyCacheDataSource = cacheDataSource
+            currencyCacheDataSource = cacheDataSource,
+            handleError = handleError
         )
 
 
