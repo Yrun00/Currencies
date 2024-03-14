@@ -1,11 +1,13 @@
 package com.yrun.presentation.core
 
+import java.io.Serializable
 
-interface UpdateObserver<UiState : Any> {
+
+interface UpdateObserver<UiState : Any> : Serializable {
     fun updateObserver(observer: UpdateUi<UiState>)
 }
 
-interface UpdateUi<T : Any> {
+interface UpdateUi<T : Any> : Serializable {
     fun updateUi(uiState: T)
 
     class Empty<T : Any> : UpdateUi<T> {

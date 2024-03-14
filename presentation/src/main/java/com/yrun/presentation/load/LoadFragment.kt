@@ -24,14 +24,14 @@ class LoadFragment : BaseFragment<FragmentProgressBinding, LoadViewModel>() {
         updateUi = object : UpdateUi<LoadUiState> {
             override fun updateUi(uiState: LoadUiState) {
                 uiState.update(
-                    progressBar = binding.progressBar,
-                    errorTextView = binding.errorTextView,
-                    retryButton = binding.retryButton
+                    progressBar = binding.fragmentProgressBar,
+                    errorTextView = binding.fragmentErrorTextView,
+                    retryButton = binding.fragmentRetryButton
                 )
             }
         }
 
-        binding.retryButton.setOnClickListener {
+        binding.fragmentRetryButton.setOnClickListener {
             viewModel.load()
         }
 

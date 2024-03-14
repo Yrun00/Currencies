@@ -26,7 +26,5 @@ interface DashboardItemsDataSource {
                     rate
                 )
             }
-
     }
 }
-

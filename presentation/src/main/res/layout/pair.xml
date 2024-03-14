@@ -10,7 +10,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:justificationMode="inter_word"
         tools:text="USD/EUR" />
 
     <TextView
@@ -18,7 +17,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:justificationMode="inter_word"
         tools:text="1.44" />
 
     <com.yrun.presentation.core.views.CustomImageButton

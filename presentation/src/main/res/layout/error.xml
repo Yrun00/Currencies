@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/errorLayout">
 
     <com.yrun.presentation.core.views.CustomTextView
         android:id="@+id/errorTextView"
@@ -14,7 +15,8 @@
         android:layout_margin="8dp"
         android:gravity="center"
         android:textColor="#ff0000"
-        tools:text="No internet connection" />
+        tools:text="No internet connection"
+        android:freezesText="true" />
 
     <com.yrun.presentation.core.views.CustomButton
         android:id="@+id/retryButton"

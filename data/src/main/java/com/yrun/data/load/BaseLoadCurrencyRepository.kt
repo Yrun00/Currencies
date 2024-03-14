@@ -6,6 +6,7 @@ import com.yrun.data.load.cache.CurrencyCacheDataSource
 import com.yrun.data.load.cloud.CurrencyCloudDataSource
 import com.yrun.domain.load.LoadCurrenciesRepository
 import com.yrun.domain.load.LoadCurrenciesResult
+import java.net.UnknownHostException
 
 class BaseLoadCurrencyRepository(
     private val currencyCacheDataSource: CurrencyCacheDataSource.Mutable,
@@ -26,3 +27,30 @@ class BaseLoadCurrencyRepository(
         LoadCurrenciesResult.Error(handleError.handleError(error))
     }
 }
+
+class FakeLoadCurrencyRepository(
+    private val currencyCacheDataSource: CurrencyCacheDataSource.Mutable,
+    private val handleError: HandleError
+) : LoadCurrenciesRepository {
+
+
+    override suspend fun loadCurrencies(): LoadCurrenciesResult {
+        if (firstTime) {
+            firstTime = false
+            return LoadCurrenciesResult.Error(handleError.handleError(UnknownHostException()))
+        } else {
+            currencyCacheDataSource.save(
+                listOf<CurrencyCache>(
+                    CurrencyCache("USD", "1"),
+                    CurrencyCache("EUR", "2"),
+                    CurrencyCache("RUB", "3")
+                )
+            )
+            return LoadCurrenciesResult.Success
+        }
+
+
+    }
+}
+
+private var firstTime = true

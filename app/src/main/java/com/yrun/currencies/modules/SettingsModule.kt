@@ -10,7 +10,7 @@ import com.yrun.presentation.settings.SettingsViewModel
 class SettingsModule(
     private val core: Core,
     private val clear: Clear,
-    private val provideInstance: ProvideInstance
+    private val provideInstance: ProvideInstance.ProvideRepository
 
 ) : Module<SettingsViewModel> {
 

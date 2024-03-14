@@ -15,7 +15,7 @@ interface ProvideModule {
     fun <T : CustomViewModel> module(clazz: Class<T>): Module<T>
 
     class Base(
-        private val provideInstance: ProvideInstance,
+        private val provideInstance: ProvideInstance.ProvideRepository,
         private val core: Core,
         private val clear: Clear
     ) : ProvideModule {

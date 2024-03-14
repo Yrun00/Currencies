@@ -7,13 +7,13 @@
     android:padding="16dp">
 
     <com.yrun.presentation.core.views.CustomProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/fragmentProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
     <com.yrun.presentation.core.views.CustomTextView
-        android:id="@+id/errorTextView"
+        android:id="@+id/fragmentErrorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -23,7 +23,7 @@
         tools:text="No internet connection" />
 
     <com.yrun.presentation.core.views.CustomButton
-        android:id="@+id/retryButton"
+        android:id="@+id/fragmentRetryButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
