@@ -11,7 +11,7 @@ class BaseSettingRepository(
 ) : SettingsRepository {
 
     override suspend fun allCurrencies(): List<String> =
-        currencyDao.currencies().map { it.id }
+        currencyDao.currencies().map { it.id }.sorted()
 
 
     override suspend fun availableDestinations(fromCurrency: String): List<String> {
