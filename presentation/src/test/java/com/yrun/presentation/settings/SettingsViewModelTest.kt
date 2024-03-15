@@ -31,7 +31,7 @@ class SettingsViewModelTest {
         runAsync = FakeRunAsync()
         uiObservable = FakeSettingsUiObservable()
         viewModel = SettingsViewModel(
-            repository = repository,
+            interactor = repository,
             clear = clear,
             navigation = navigation,
             runAsync = runAsync,

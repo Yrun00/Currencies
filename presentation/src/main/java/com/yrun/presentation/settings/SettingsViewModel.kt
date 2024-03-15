@@ -1,6 +1,7 @@
 package com.yrun.presentation.settings
 
-import com.yrun.domain.settings.SettingsRepository
+import com.yrun.domain.premium.SaveResult
+import com.yrun.domain.premium.SettingsInteractor
 import com.yrun.presentation.core.BundleWrapper
 import com.yrun.presentation.core.UiObservable
 import com.yrun.presentation.core.UpdateUi
@@ -9,20 +10,22 @@ import com.yrun.presentation.main.BaseViewModel
 import com.yrun.presentation.main.Clear
 import com.yrun.presentation.main.Navigation
 import com.yrun.presentation.main.RunAsync
+import com.yrun.presentation.premium.BasePremiumResultMapper
 import com.yrun.presentation.settings.adapter.ChoiceUi
 
 class SettingsViewModel(
     runAsync: RunAsync,
     private val navigation: Navigation.Navigate,
     private val clear: Clear,
-    private val repository: SettingsRepository,
+    private val interactor: SettingsInteractor,
     private val observable: UiObservable<SettingsUiState>,
+    private val premiumMapper: SaveResult.Mapper = BasePremiumResultMapper(navigation, clear)
 ) : BaseViewModel(runAsync), CurrencyChoice {
 
     fun init(bundleWrapper: BundleWrapper.Mutable) {
         if (bundleWrapper.isEmpty()) {
             runAsync({
-                repository.allCurrencies()
+                interactor.allCurrencies()
             }) { currencies ->
                 val listCurrencies = currencies.map {
                     ChoiceUi.Base(isSelected = false, currency = it)
@@ -53,10 +56,10 @@ class SettingsViewModel(
 
     override fun chooseFromCurrency(currency: String) {
         runAsync({
-            val fromCurrencies = repository.allCurrencies().map {
+            val fromCurrencies = interactor.allCurrencies().map {
                 ChoiceUi.Base(isSelected = it == currency, currency = it)
             }
-            val toCurrencies = repository.availableDestinations(currency).map {
+            val toCurrencies = interactor.availableDestinations(currency).map {
                 ChoiceUi.Base(isSelected = false, currency = it)
             }.let { it.ifEmpty { listOf(ChoiceUi.Empty) } }
             SettingsUiState.AvailableDestination(fromCurrencies, toCurrencies)
@@ -67,8 +70,8 @@ class SettingsViewModel(
 
     override fun chooseToCurrency(fromCurrency: String, toCurrency: String) {
         runAsync({
-            val toCurrencies = repository.availableDestinations(fromCurrency)
-            SettingsUiState.SaveAvailable(fromCurrency = repository.allCurrencies().map {
+            val toCurrencies = interactor.availableDestinations(fromCurrency)
+            SettingsUiState.SaveAvailable(fromCurrency = interactor.allCurrencies().map {
                 ChoiceUi.Base(isSelected = it == fromCurrency, currency = it)
             }, toCurrency = toCurrencies.map {
                 ChoiceUi.Base(isSelected = it == toCurrency, currency = it)
@@ -78,8 +81,13 @@ class SettingsViewModel(
     }
 
     fun saveSettings(fromCurrency: String, toCurrency: String) {
-        runAsync({ repository.save(fromCurrency = fromCurrency, toCurrency = toCurrency) }) {
-            backToDashboard()
+        runAsync({
+            interactor.save(
+                fromCurrency = fromCurrency,
+                toCurrency = toCurrency
+            )
+        }) { premiumResult ->
+            premiumResult.map(premiumMapper)
         }
     }
 

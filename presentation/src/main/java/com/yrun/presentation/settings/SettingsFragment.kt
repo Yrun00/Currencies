@@ -42,7 +42,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         binding.fromRecyclerView.adapter = fromAdapter
         binding.toRecyclerView.adapter = toAdapter
 
+        val fragmentInteraction = FragmentInteraction.Base()
+
         binding.saveButton.setOnClickListener {
+
+            fragmentInteraction
+                .source(this, fromAdapter.selectedChoice(), toAdapter.selectedChoice())
+
             viewModel.saveSettings(
                 fromCurrency = fromAdapter.selectedChoice(),
                 toCurrency = toAdapter.selectedChoice()
@@ -84,3 +90,4 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 
 
 }
+

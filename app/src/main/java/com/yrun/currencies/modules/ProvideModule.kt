@@ -7,6 +7,7 @@ import com.yrun.presentation.load.LoadViewModel
 import com.yrun.presentation.main.Clear
 import com.yrun.presentation.main.CustomViewModel
 import com.yrun.presentation.main.MainViewModel
+import com.yrun.presentation.premium.PremiumViewModel
 import com.yrun.presentation.settings.SettingsViewModel
 
 
@@ -37,6 +38,12 @@ interface ProvideModule {
                 )
 
                 SettingsViewModel::class.java -> SettingsModule(
+                    core = core,
+                    clear = clear,
+                    provideInstance = provideInstance
+                )
+
+                PremiumViewModel::class.java -> PremiumModule(
                     core = core,
                     clear = clear,
                     provideInstance = provideInstance

@@ -131,7 +131,7 @@ class SettingsPage {
             onView(RecyclerViewMatcher(index, R.id.DeleteButton, R.id.dashboardRecyclerView))
                 .check(
                     matches(
-                        ImageViewDrawableMatcher(R.drawable.baseline_auto_delete_24)
+                        ImageViewDrawableMatcher(R.drawable.delete_24)
                     )
                 )
         }
