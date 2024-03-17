@@ -102,7 +102,7 @@ interface ProvideInstance {
     }
 
     class Fake : ProvideRepository {
-        override fun provideMaxFreeSavedPairsCount(): Int = 3
+        override fun provideMaxFreeSavedPairsCount(): Int = 2
 
         override fun provideLoadRepository(
             cacheDataSource: CurrencyCacheDataSource.Mutable,

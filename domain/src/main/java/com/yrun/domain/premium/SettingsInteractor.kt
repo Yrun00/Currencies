@@ -27,6 +27,6 @@ interface SettingsInteractor {
                 repository.save(fromCurrency = fromCurrency, toCurrency = toCurrency)
                 SaveResult.Success
             } else
-                SaveResult.RequireSave
+                SaveResult.RequirePremium
     }
 }

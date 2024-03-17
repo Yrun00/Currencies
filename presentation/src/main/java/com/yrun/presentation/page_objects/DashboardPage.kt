@@ -52,7 +52,7 @@ class DashboardPage {
         onView(
             RecyclerViewMatcher(
                 position,
-                targetViewId = R.id.DeleteButton,
+                targetViewId = R.id.deleteButton,
                 recyclerViewId = R.id.dashboardRecyclerView
             )
         )

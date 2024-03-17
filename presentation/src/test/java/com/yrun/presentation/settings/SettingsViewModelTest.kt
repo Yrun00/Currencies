@@ -1,12 +1,14 @@
 package com.yrun.presentation.settings
 
-import com.yrun.domain.settings.SettingsRepository
+import com.yrun.domain.premium.SaveResult
+import com.yrun.domain.premium.SettingsInteractor
 import com.yrun.presentation.FakeClear
 import com.yrun.presentation.FakeNavigation
 import com.yrun.presentation.FakeRunAsync
 import com.yrun.presentation.core.BundleWrapper
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.dashboard.DashboardScreen
+import com.yrun.presentation.premium.PremiumViewModel
 import com.yrun.presentation.settings.adapter.ChoiceUi
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -16,8 +18,9 @@ import org.junit.Test
 
 class SettingsViewModelTest {
 
+
     private lateinit var viewModel: SettingsViewModel
-    private lateinit var repository: FakeSettingsRepository
+    private lateinit var interactor: FakeSettingsInteractor
     private lateinit var clear: FakeClear
     private lateinit var navigation: FakeNavigation
     private lateinit var runAsync: FakeRunAsync
@@ -25,13 +28,13 @@ class SettingsViewModelTest {
 
     @Before
     fun setup() {
-        repository = FakeSettingsRepository()
+        interactor = FakeSettingsInteractor()
         clear = FakeClear()
         navigation = FakeNavigation()
         runAsync = FakeRunAsync()
         uiObservable = FakeSettingsUiObservable()
         viewModel = SettingsViewModel(
-            interactor = repository,
+            interactor = interactor,
             clear = clear,
             navigation = navigation,
             runAsync = runAsync,
@@ -91,10 +94,15 @@ class SettingsViewModelTest {
             )
         )
         viewModel.saveSettings(fromCurrency = "USD", toCurrency = "EUR")
-        repository.checkSaveCalled()
+        interactor.checkSaveCalled()
         runAsync.returnResult()
         assertEquals(navigation.actual, DashboardScreen)
-        clear.checkCalled(SettingsViewModel::class.java)
+        clear.checkList(
+            listOf<String>(
+                SettingsViewModel::class.java.toString(),
+                PremiumViewModel::class.java.toString()
+            )
+        )
     }
 
     @Test
@@ -141,7 +149,7 @@ class FakeSettingsUiObservable : SettingsUiObservable {
     }
 }
 
-class FakeSettingsRepository : SettingsRepository {
+class FakeSettingsInteractor : SettingsInteractor {
 
     private var saveCalled = false
 
@@ -153,12 +161,12 @@ class FakeSettingsRepository : SettingsRepository {
         return allCurrencies().filterNot { it == fromCurrency }
     }
 
-    override suspend fun save(toCurrency: String, fromCurrency: String) {
+    override suspend fun save(toCurrency: String, fromCurrency: String): SaveResult {
         saveCalled = true
+        return SaveResult.Success
     }
 
     fun checkSaveCalled() {
         assertTrue(saveCalled)
     }
-
 }

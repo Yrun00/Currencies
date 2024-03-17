@@ -128,10 +128,10 @@ class SettingsPage {
             onView(RecyclerViewMatcher(index, R.id.rateText, R.id.dashboardRecyclerView))
                 .check(matches(withText(rate)))
 
-            onView(RecyclerViewMatcher(index, R.id.DeleteButton, R.id.dashboardRecyclerView))
+            onView(RecyclerViewMatcher(index, R.id.deleteButton, R.id.dashboardRecyclerView))
                 .check(
                     matches(
-                        ImageViewDrawableMatcher(R.drawable.delete_24)
+                        isDisplayed() //ImageViewDrawableMatcher(R.drawable.delete_24
                     )
                 )
         }

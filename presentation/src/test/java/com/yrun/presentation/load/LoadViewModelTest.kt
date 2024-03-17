@@ -45,7 +45,7 @@ class LoadViewModelTest {
         Assert.assertEquals(LoadUiState.Progress, uiObservable.actual)
         runAsync.returnResult()
         Assert.assertEquals(DashboardScreen, navigation.actual)
-        clear.checkCalled(LoadViewModel::class.java)
+        clear.checkLast(LoadViewModel::class.java.toString())
     }
 
     @Test

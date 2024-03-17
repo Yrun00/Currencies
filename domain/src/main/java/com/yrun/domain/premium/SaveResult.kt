@@ -18,7 +18,7 @@ interface SaveResult {
         }
     }
 
-    object RequireSave : SaveResult {
+    object RequirePremium : SaveResult {
 
         override fun map(mapper: Mapper) {
             mapper.mapRequirePremium()
