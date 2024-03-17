@@ -2,6 +2,7 @@ package com.yrun.presentation.main
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+
 interface Screen {
 
     fun show(container: Int, supportFragmentManager: FragmentManager)
@@ -23,6 +24,26 @@ interface Screen {
             }
         }
     }
+
+    abstract class Add(clazz: Class<out Fragment>) : Abstract(clazz) {
+
+        override fun show(container: Int, supportFragmentManager: FragmentManager) {
+            if (supportFragmentManager.findFragmentByTag(clazz.name) == null) {
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(container, fragment(), clazz.name)
+                    .addToBackStack(clazz.simpleName)
+                    .commit()
+            }
+        }
+    }
+
+    object Pop : Screen {
+        override fun show(container: Int, supportFragmentManager: FragmentManager) {
+            supportFragmentManager.popBackStack()
+        }
+    }
+
 
     object Empty : Screen {
 

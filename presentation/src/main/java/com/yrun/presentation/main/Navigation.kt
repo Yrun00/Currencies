@@ -14,4 +14,6 @@ interface Navigation {
     interface Mutable : Navigate, ObserveNavigation
 
     object Base : UiObservable.Abstract<Screen>(Screen.Empty), Mutable
+
+
 }

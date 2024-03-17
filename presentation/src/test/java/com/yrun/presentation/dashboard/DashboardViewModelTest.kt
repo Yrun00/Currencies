@@ -101,7 +101,7 @@ class DashboardViewModelTest {
     fun goToSettings() {
         viewModel.goToSettings()
         Assert.assertEquals(SettingsScreen, navigation.actual)
-        clear.checkCalled(DashboardViewModel::class.java)
+        clear.checkLast(DashboardViewModel::class.java.toString())
     }
 }
 

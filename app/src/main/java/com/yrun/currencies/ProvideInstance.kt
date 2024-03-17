@@ -11,14 +11,20 @@ import com.yrun.data.load.FakeLoadCurrencyRepository
 import com.yrun.data.load.cache.CurrencyCacheDataSource
 import com.yrun.data.load.cache.CurrencyDao
 import com.yrun.data.load.cloud.CurrencyCloudDataSource
-import com.yrun.data.settings.BaseSettingRepository
+import com.yrun.data.settings.BaseSettingsRepository
 import com.yrun.domain.dashboard.DashboardRepository
 import com.yrun.domain.load.LoadCurrenciesRepository
+import com.yrun.domain.premium.PremiumStorage
+import com.yrun.domain.premium.SettingsInteractor
 import com.yrun.domain.settings.SettingsRepository
 
 interface ProvideInstance {
 
+
     interface ProvideRepository {
+
+        fun provideMaxFreeSavedPairsCount(): Int
+
         fun provideLoadRepository(
             cacheDataSource: CurrencyCacheDataSource.Mutable,
             provideResources: ProvideResources,
@@ -28,7 +34,7 @@ interface ProvideInstance {
 
         fun provideSettingsRepository(
             currencyDao: CurrencyDao,
-            favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable
+            favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
         ): SettingsRepository
 
         fun provideDashboardRepository(
@@ -36,9 +42,19 @@ interface ProvideInstance {
             favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
             handleError: HandleError.Base
         ): DashboardRepository
+
+        fun provideSettingsInteractor(
+            currencyDao: CurrencyDao,
+            favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
+            maxFreePairCount: Int,
+            premiumStorage: PremiumStorage.Mutable,
+        ): SettingsInteractor
     }
 
     class Base : ProvideRepository {
+
+        override fun provideMaxFreeSavedPairsCount(): Int = 5
+
         override fun provideLoadRepository(
             cacheDataSource: CurrencyCacheDataSource.Mutable,
             provideResources: ProvideResources,
@@ -53,9 +69,9 @@ interface ProvideInstance {
         override fun provideSettingsRepository(
             currencyDao: CurrencyDao,
             favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable
-        ): SettingsRepository = BaseSettingRepository(
+        ): SettingsRepository = BaseSettingsRepository(
             currencyDao = currencyDao,
-            favoritePairsCacheDataSource = favoritePairsCacheDataSource
+            favoritePairsCacheDataSource = favoritePairsCacheDataSource,
         )
 
         override fun provideDashboardRepository(
@@ -68,9 +84,26 @@ interface ProvideInstance {
                 favoritePairsCacheDataSource = favoritePairsCacheDataSource,
                 handleError = handleError
             )
+
+        override fun provideSettingsInteractor(
+            currencyDao: CurrencyDao,
+            favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
+            maxFreePairCount: Int,
+            premiumStorage: PremiumStorage.Mutable,
+        ): SettingsInteractor =
+            SettingsInteractor.Base(
+                maxFreePairsCount = maxFreePairCount,
+                premiumStorage = premiumStorage,
+                repository = BaseSettingsRepository(
+                    currencyDao = currencyDao,
+                    favoritePairsCacheDataSource = favoritePairsCacheDataSource,
+                )
+            )
     }
 
     class Fake : ProvideRepository {
+        override fun provideMaxFreeSavedPairsCount(): Int = 2
+
         override fun provideLoadRepository(
             cacheDataSource: CurrencyCacheDataSource.Mutable,
             provideResources: ProvideResources,
@@ -81,11 +114,10 @@ interface ProvideInstance {
             handleError = handleError
         )
 
-
         override fun provideSettingsRepository(
             currencyDao: CurrencyDao,
             favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable
-        ): SettingsRepository = BaseSettingRepository(
+        ): SettingsRepository = BaseSettingsRepository(
             currencyDao = currencyDao,
             favoritePairsCacheDataSource = favoritePairsCacheDataSource
         )
@@ -99,5 +131,20 @@ interface ProvideInstance {
             favoritePairsCacheDataSource = favoritePairsCacheDataSource,
             handleError = handleError
         )
+
+        override fun provideSettingsInteractor(
+            currencyDao: CurrencyDao,
+            favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
+            maxFreePairCount: Int,
+            premiumStorage: PremiumStorage.Mutable,
+        ): SettingsInteractor =
+            SettingsInteractor.Base(
+                maxFreePairsCount = maxFreePairCount,
+                premiumStorage = premiumStorage,
+                repository = BaseSettingsRepository(
+                    currencyDao = currencyDao,
+                    favoritePairsCacheDataSource = favoritePairsCacheDataSource,
+                )
+            )
     }
 }

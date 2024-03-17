@@ -11,7 +11,7 @@ import org.junit.Test
 
 class BaseSettingsRepositoryTest {
 
-    private lateinit var repository: BaseSettingRepository
+    private lateinit var repository: BaseSettingsRepository
     private lateinit var currencyDao: FakeCurrencyDao
     private lateinit var favoritePairsCacheDataSource: FakeFavoritePairsCacheDataSource
 
@@ -19,28 +19,28 @@ class BaseSettingsRepositoryTest {
     fun setup() {
         currencyDao = FakeCurrencyDao()
         favoritePairsCacheDataSource = FakeFavoritePairsCacheDataSource()
-        repository = BaseSettingRepository(currencyDao, favoritePairsCacheDataSource)
+        repository = BaseSettingsRepository(currencyDao, favoritePairsCacheDataSource)
     }
 
     @Test
     fun scenarioTest() = runBlocking {
         var actual = repository.allCurrencies()
-        assertEquals(listOf("USD", "EUR", "RUB", "JPY", "AUD"), actual)
+        assertEquals(listOf("AUD", "EUR", "JPY", "RUB", "USD"), actual)
 
         actual = repository.availableDestinations("RUB")
-        assertEquals(listOf("USD", "EUR", "JPY", "AUD"), actual)
+        assertEquals(listOf("AUD", "EUR", "JPY", "USD"), actual)
 
         repository.save(toCurrency = "USD", fromCurrency = "RUB")
         actual = repository.availableDestinations("RUB")
-        assertEquals(listOf("EUR", "JPY", "AUD"), actual)
+        assertEquals(listOf("AUD", "EUR", "JPY"), actual)
 
         repository.save(toCurrency = "JPY", fromCurrency = "RUB")
         actual = repository.availableDestinations("RUB")
-        assertEquals(listOf("EUR", "AUD"), actual)
+        assertEquals(listOf("AUD", "EUR"), actual)
 
         repository.save(toCurrency = "RUB", fromCurrency = "JPY")
         actual = repository.availableDestinations("RUB")
-        assertEquals(listOf("EUR", "AUD"), actual)
+        assertEquals(listOf("AUD", "EUR"), actual)
 
         repository.save(toCurrency = "EUR", fromCurrency = "RUB")
         actual = repository.availableDestinations("RUB")
@@ -52,13 +52,13 @@ class BaseSettingsRepositoryTest {
 
 
         actual = repository.availableDestinations("JPY")
-        assertEquals(listOf("USD", "EUR", "AUD"), actual)
+        assertEquals(listOf("AUD", "EUR", "USD"), actual)
 
     }
 
     @Test
     fun allCurrencyTest() = runBlocking {
-        assertEquals(listOf("USD", "EUR", "RUB", "JPY", "AUD"), repository.allCurrencies())
+        assertEquals(listOf("AUD", "EUR", "JPY", "RUB", "USD"), repository.allCurrencies())
     }
 
     @Test

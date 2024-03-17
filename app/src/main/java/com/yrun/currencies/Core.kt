@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.yrun.data.core.ProvideResources
 import com.yrun.data.dashboard.cache.PairDatabase
 import com.yrun.data.load.cache.CurrencyDatabase
+import com.yrun.data.premium.BasePremiumStorage
+import com.yrun.domain.premium.PremiumStorage
 import com.yrun.presentation.main.Navigation
 import com.yrun.presentation.main.RunAsync
 
@@ -22,8 +24,11 @@ interface Core {
 
     fun providePairDatabase(): PairDatabase
 
+    fun providePremiumStorage(): PremiumStorage.Mutable
+
     class Base(private val context: Context) : Core {
 
+        private val premiumStorage: PremiumStorage.Mutable = BasePremiumStorage(context)
         private val navigation: Navigation.Mutable = Navigation.Base
         private val provideResources by lazy { BaseProvideResources(context) }
         private val runAsync by lazy { RunAsync.Base() }
@@ -50,6 +55,7 @@ interface Core {
 
         override fun providePairDatabase(): PairDatabase = pairDatabase
 
+        override fun providePremiumStorage(): PremiumStorage.Mutable = premiumStorage
 
     }
 }

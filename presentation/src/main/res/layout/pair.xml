@@ -7,24 +7,26 @@
 
     <TextView
         android:id="@+id/pairText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        tools:text="USD/EUR" />
+        tools:text="USD/EUR"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/rateText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        tools:text="1.44" />
+        android:layout_weight="1"
+        tools:text="1.44"
+        android:textSize="20sp" />
 
     <com.yrun.presentation.core.views.CustomImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/DeletePair"
-        android:src="@drawable/baseline_auto_delete_24"
-        android:id="@+id/DeleteButton" />
+        android:src="@drawable/delete_24"
+        android:id="@+id/deleteButton" />
 
 </LinearLayout>
 

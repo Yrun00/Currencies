@@ -4,29 +4,27 @@ import com.yrun.currencies.Core
 import com.yrun.currencies.ProvideInstance
 import com.yrun.data.dashboard.cache.FavoritePairsCacheDataSource
 import com.yrun.presentation.main.Clear
-import com.yrun.presentation.settings.SettingsUiObservable
-import com.yrun.presentation.settings.SettingsViewModel
+import com.yrun.presentation.premium.PremiumViewModel
 
-class SettingsModule(
-    private val core: Core,
+class PremiumModule(
     private val clear: Clear,
+    private val core: Core,
     private val provideInstance: ProvideInstance.ProvideRepository
 
-) : Module<SettingsViewModel> {
-
-    override fun viewModel(): SettingsViewModel {
-        return SettingsViewModel(
-            navigation = core.provideNavigation(),
-            runAsync = core.provideRunAsync(),
+) : Module<PremiumViewModel> {
+    override fun viewModel(): PremiumViewModel {
+        return PremiumViewModel(
             clear = clear,
-            observable = SettingsUiObservable.Base(),
+            navigation = core.provideNavigation(),
+            premiumStorage = core.providePremiumStorage(),
             interactor = provideInstance.provideSettingsInteractor(
                 core.provideCurrencyDataBase().currencyDao(),
+                premiumStorage = core.providePremiumStorage(),
+                maxFreePairCount = provideInstance.provideMaxFreeSavedPairsCount(),
                 favoritePairsCacheDataSource = FavoritePairsCacheDataSource.Base(
                     core.providePairDatabase().pairDao()
-                ), maxFreePairCount = provideInstance.provideMaxFreeSavedPairsCount(),
-                premiumStorage = core.providePremiumStorage()
-            )
+                )
+            ), runAsync = core.provideRunAsync()
         )
     }
 }

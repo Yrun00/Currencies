@@ -7,4 +7,6 @@ interface SettingsRepository {
     suspend fun availableDestinations(fromCurrency: String): List<String>
 
     suspend fun save(toCurrency: String, fromCurrency: String)
+
+    suspend fun savedPairsCount(): Int
 }

@@ -75,7 +75,7 @@ class DashboardAdapter(
             override fun bind(item: DashboardUi) {
                 item.show(binding)
 
-                binding.DeleteButton.setOnClickListener {
+                binding.deleteButton.setOnClickListener {
                     clickListener.deletePair(item.id())
                 }
             }
