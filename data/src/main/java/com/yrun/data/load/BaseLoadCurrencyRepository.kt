@@ -7,8 +7,9 @@ import com.yrun.data.load.cloud.CurrencyCloudDataSource
 import com.yrun.domain.load.LoadCurrenciesRepository
 import com.yrun.domain.load.LoadCurrenciesResult
 import java.net.UnknownHostException
+import javax.inject.Inject
 
-class BaseLoadCurrencyRepository(
+class BaseLoadCurrencyRepository @Inject constructor(
     private val currencyCacheDataSource: CurrencyCacheDataSource.Mutable,
     private val currencyCloudDataSource: CurrencyCloudDataSource,
     private val handleError: HandleError
@@ -28,7 +29,7 @@ class BaseLoadCurrencyRepository(
     }
 }
 
-class FakeLoadCurrencyRepository(
+class FakeLoadCurrencyRepository @Inject constructor(
     private val currencyCacheDataSource: CurrencyCacheDataSource.Mutable,
     private val handleError: HandleError
 ) : LoadCurrenciesRepository {

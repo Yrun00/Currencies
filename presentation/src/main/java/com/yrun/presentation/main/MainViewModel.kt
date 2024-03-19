@@ -1,11 +1,15 @@
 package com.yrun.presentation.main
 
+import androidx.lifecycle.ViewModel
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.load.LoadScreen
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MainViewModel(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val navigation: Navigation.Mutable
-) : CustomViewModel {
+) : ViewModel() {
 
 
     fun init(isFirsRun: Boolean) {

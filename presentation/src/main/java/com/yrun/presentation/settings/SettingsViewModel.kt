@@ -3,23 +3,23 @@ package com.yrun.presentation.settings
 import com.yrun.domain.premium.SaveResult
 import com.yrun.domain.premium.SettingsInteractor
 import com.yrun.presentation.core.BundleWrapper
-import com.yrun.presentation.core.UiObservable
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.dashboard.DashboardScreen
 import com.yrun.presentation.main.BaseViewModel
-import com.yrun.presentation.main.Clear
 import com.yrun.presentation.main.Navigation
 import com.yrun.presentation.main.RunAsync
 import com.yrun.presentation.premium.BasePremiumResultMapper
 import com.yrun.presentation.settings.adapter.ChoiceUi
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SettingsViewModel(
+@HiltViewModel
+class SettingsViewModel @Inject constructor(
     runAsync: RunAsync,
-    private val navigation: Navigation.Navigate,
-    private val clear: Clear,
+    private val navigation: Navigation.Mutable,
     private val interactor: SettingsInteractor,
-    private val observable: UiObservable<SettingsUiState>,
-    private val premiumMapper: SaveResult.Mapper = BasePremiumResultMapper(navigation, clear)
+    private val observable: SettingsUiObservable,
+    private val premiumMapper: SaveResult.Mapper = BasePremiumResultMapper(navigation)
 ) : BaseViewModel(runAsync), CurrencyChoice {
 
     fun init(bundleWrapper: BundleWrapper.Mutable) {
@@ -51,7 +51,6 @@ class SettingsViewModel(
 
     fun backToDashboard() {
         navigation.updateUi(DashboardScreen)
-        clear.clear(SettingsViewModel::class.java)
     }
 
     override fun chooseFromCurrency(currency: String) {

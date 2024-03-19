@@ -1,36 +1,53 @@
 package com.yrun.currencies.modules
 
-import com.yrun.currencies.Core
 import com.yrun.currencies.ProvideInstance
 import com.yrun.data.core.HandleError
 import com.yrun.data.load.cache.CurrencyCacheDataSource
 import com.yrun.data.load.cloud.CurrencyCloudDataSource
+import com.yrun.domain.load.LoadCurrenciesRepository
+import com.yrun.domain.load.LoadCurrenciesResult
+import com.yrun.presentation.load.BaseLoadResultMapper
 import com.yrun.presentation.load.LoadUiObservable
-import com.yrun.presentation.load.LoadViewModel
-import com.yrun.presentation.main.Clear
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 
-class LoadModule(
-    private val core: Core,
-    private val provideInstance: ProvideInstance.ProvideRepository,
-    private val clear: Clear
+@Module
+@InstallIn(ViewModelComponent::class)
+abstract class LoadModule {
+    @Binds
+    @ViewModelScoped
+    abstract fun bindObservable(
+        observable: LoadUiObservable.Base
+    ): LoadUiObservable
 
-) : Module<LoadViewModel> {
+    @Binds
+    abstract fun bindCloudDataSource(
+        cloudDataSource: CurrencyCloudDataSource.Base
+    ): CurrencyCloudDataSource
 
-    override fun viewModel(): LoadViewModel {
-        return LoadViewModel(
-            uiObservable = LoadUiObservable.Base(),
+    @Binds
+    abstract fun bindCacheDataSource(
+        cacheDataSource: CurrencyCacheDataSource.Base
+    ): CurrencyCacheDataSource.Mutable
 
-            repository = provideInstance.provideLoadRepository(
-                provideResources = core.provideResources(),
-                cacheDataSource = CurrencyCacheDataSource.Base(
-                    core.provideCurrencyDataBase().currencyDao()
-                ),
-                cloudDataSource = CurrencyCloudDataSource.Base(),
-                handleError = HandleError.Base(core.provideResources())
-            ),
-            clear = clear,
-            navigation = core.provideNavigation(),
-            runAsync = core.provideRunAsync()
+    @Binds
+    abstract fun bindMapper(mapper: BaseLoadResultMapper): LoadCurrenciesResult.Mapper
+
+    companion object {
+        @Provides
+        fun provideRepository(
+            provideInstance: ProvideInstance,
+            cloudDataSource: CurrencyCloudDataSource,
+            cacheDataSource: CurrencyCacheDataSource.Mutable,
+            handleError: HandleError.Base
+        ): LoadCurrenciesRepository = provideInstance.provideLoadRepository(
+            cloudDataSource = cloudDataSource,
+            cacheDataSource = cacheDataSource,
+            handleError = handleError
         )
     }
 }

@@ -6,7 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.yrun.data.dashboard.cache.PairCache
 import com.yrun.data.dashboard.cache.PairDao
-import com.yrun.data.dashboard.cache.PairDatabase
+import com.yrun.data.load.cache.CurrencyDatabase
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -19,14 +19,14 @@ import java.io.IOException
 @RunWith(AndroidJUnit4::class)
 class RoomTestPairDao {
 
-    private lateinit var db: PairDatabase
+    private lateinit var db: CurrencyDatabase
     private lateinit var dao: PairDao
 
     @Before
     fun setUp() {
         val context: Context = ApplicationProvider.getApplicationContext()
         db = Room.inMemoryDatabaseBuilder(
-            context, PairDatabase::class.java
+            context, CurrencyDatabase::class.java
         )
             // Allowing main thread queries, just for testing.
             .allowMainThreadQueries()

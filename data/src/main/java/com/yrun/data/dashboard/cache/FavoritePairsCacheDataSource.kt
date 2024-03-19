@@ -1,5 +1,7 @@
 package com.yrun.data.dashboard.cache
 
+import javax.inject.Inject
+
 interface FavoritePairsCacheDataSource {
 
     interface Save {
@@ -17,7 +19,7 @@ interface FavoritePairsCacheDataSource {
 
     interface Mutable : Save, Read, Delete
 
-    class Base(private val pairDao: PairDao) : Mutable {
+    class Base @Inject constructor(private val pairDao: PairDao) : Mutable {
 
         override suspend fun save(currencyPair: PairCache) {
             pairDao.insert(currencyPair)

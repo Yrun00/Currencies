@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import com.yrun.data.databinding.FragmentPremiumBinding
 import com.yrun.presentation.core.BaseFragment
 import com.yrun.presentation.settings.FragmentInteraction
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PremiumFragment : BaseFragment<FragmentPremiumBinding, PremiumViewModel>() {
 
-    override val viewModelClass: Class<PremiumViewModel> = PremiumViewModel::class.java
+    override val viewModel: PremiumViewModel by viewModels()
 
     override fun inflate(inflater: LayoutInflater, container: ViewGroup?): FragmentPremiumBinding =
         FragmentPremiumBinding.inflate(inflater, container, false)

@@ -2,13 +2,11 @@ package com.yrun.presentation.settings
 
 import com.yrun.domain.premium.SaveResult
 import com.yrun.domain.premium.SettingsInteractor
-import com.yrun.presentation.FakeClear
 import com.yrun.presentation.FakeNavigation
 import com.yrun.presentation.FakeRunAsync
 import com.yrun.presentation.core.BundleWrapper
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.dashboard.DashboardScreen
-import com.yrun.presentation.premium.PremiumViewModel
 import com.yrun.presentation.settings.adapter.ChoiceUi
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -21,7 +19,6 @@ class SettingsViewModelTest {
 
     private lateinit var viewModel: SettingsViewModel
     private lateinit var interactor: FakeSettingsInteractor
-    private lateinit var clear: FakeClear
     private lateinit var navigation: FakeNavigation
     private lateinit var runAsync: FakeRunAsync
     private lateinit var uiObservable: FakeSettingsUiObservable
@@ -29,13 +26,11 @@ class SettingsViewModelTest {
     @Before
     fun setup() {
         interactor = FakeSettingsInteractor()
-        clear = FakeClear()
         navigation = FakeNavigation()
         runAsync = FakeRunAsync()
         uiObservable = FakeSettingsUiObservable()
         viewModel = SettingsViewModel(
             interactor = interactor,
-            clear = clear,
             navigation = navigation,
             runAsync = runAsync,
             observable = uiObservable
@@ -97,12 +92,6 @@ class SettingsViewModelTest {
         interactor.checkSaveCalled()
         runAsync.returnResult()
         assertEquals(navigation.actual, DashboardScreen)
-        clear.checkList(
-            listOf<String>(
-                SettingsViewModel::class.java.toString(),
-                PremiumViewModel::class.java.toString()
-            )
-        )
     }
 
     @Test

@@ -4,16 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.yrun.data.databinding.FragmentProgressBinding
 import com.yrun.presentation.core.BaseFragment
 import com.yrun.presentation.core.UpdateUi
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class LoadFragment : BaseFragment<FragmentProgressBinding, LoadViewModel>() {
 
     private lateinit var updateUi: UpdateUi<LoadUiState>
 
-    override val viewModelClass: Class<LoadViewModel> = LoadViewModel::class.java
+    override val viewModel: LoadViewModel by viewModels()
+
 
     override fun inflate(inflater: LayoutInflater, container: ViewGroup?): FragmentProgressBinding =
         FragmentProgressBinding.inflate(inflater, container, false)

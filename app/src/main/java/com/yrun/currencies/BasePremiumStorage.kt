@@ -1,9 +1,14 @@
-package com.yrun.data.premium
+package com.yrun.currencies
 
 import android.content.Context
 import com.yrun.domain.premium.PremiumStorage
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class BasePremiumStorage(context: Context) : PremiumStorage.Mutable {
+class BasePremiumStorage
+@Inject constructor(
+    @ApplicationContext context: Context
+) : PremiumStorage.Mutable {
 
     private val sharedPreferences =
         context.getSharedPreferences("premium_storage", Context.MODE_PRIVATE)

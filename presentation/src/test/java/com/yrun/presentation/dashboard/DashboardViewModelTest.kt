@@ -3,7 +3,6 @@ package com.yrun.presentation.dashboard
 import com.yrun.domain.dashboard.DashboardItem
 import com.yrun.domain.dashboard.DashboardRepository
 import com.yrun.domain.dashboard.DashboardResult
-import com.yrun.presentation.FakeClear
 import com.yrun.presentation.FakeNavigation
 import com.yrun.presentation.FakeRunAsync
 import com.yrun.presentation.core.UpdateUi
@@ -17,31 +16,28 @@ class DashboardViewModelTest {
 
     private lateinit var viewModel: DashboardViewModel
     private lateinit var repository: FakeDashboardRepository
-    private lateinit var clear: FakeClear
     private lateinit var navigation: FakeNavigation
     private lateinit var runAsync: FakeRunAsync
     private lateinit var uiObservable: FakeDashboardUiObservable
     private lateinit var derive: CurrencyPairUi.Derive
     private lateinit var mapper: BaseDashboardResultMapper
     private lateinit var dashboardItemMapper: BaseDashboardItemMapper
-    private lateinit var concat: CurrencyPairUi.Concat
+    private lateinit var concat: CurrencyPairUi.Mutable
 
     @Before
     fun setup() {
         repository = FakeDashboardRepository()
-        clear = FakeClear()
         navigation = FakeNavigation()
         runAsync = FakeRunAsync()
         uiObservable = FakeDashboardUiObservable()
-        concat = CurrencyPairUi.Base()
-        dashboardItemMapper = BaseDashboardItemMapper(concat)
+        concat = CurrencyPairUi.Base(separator = "/")
+        dashboardItemMapper = BaseDashboardItemMapper(concat = concat)
         viewModel = DashboardViewModel(
             repository = repository,
-            clear = clear,
             navigation = navigation,
             runAsync = runAsync,
             observable = uiObservable,
-            derive = CurrencyPairUi.Base(),
+            derive = CurrencyPairUi.Base(separator = "/"),
             mapper = BaseDashboardResultMapper(uiObservable, dashboardItemMapper)
 
         )
@@ -101,7 +97,6 @@ class DashboardViewModelTest {
     fun goToSettings() {
         viewModel.goToSettings()
         Assert.assertEquals(SettingsScreen, navigation.actual)
-        clear.checkLast(DashboardViewModel::class.java.toString())
     }
 }
 

@@ -10,7 +10,7 @@ class CurrencyPairUiTest {
 
     @Before
     fun setup() {
-        currencyPairUi = CurrencyPairUi.Base()
+        currencyPairUi = CurrencyPairUi.Base(separator = "/")
     }
 
     @Test

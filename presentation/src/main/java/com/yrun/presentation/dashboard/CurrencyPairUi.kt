@@ -1,5 +1,7 @@
 package com.yrun.presentation.dashboard
 
+import javax.inject.Inject
+
 interface CurrencyPairUi {
     interface Concat {
         fun concat(fromCurrency: String, toCurrency: String): String
@@ -11,7 +13,8 @@ interface CurrencyPairUi {
 
     interface Mutable : Concat, Derive
 
-    class Base(private val separator: String = "/") : Mutable {
+    class Base @Inject constructor(private val separator: String) : Mutable {
+
         override fun concat(fromCurrency: String, toCurrency: String): String {
             return toCurrency + separator + fromCurrency
         }
