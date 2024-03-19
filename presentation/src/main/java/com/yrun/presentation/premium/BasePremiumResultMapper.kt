@@ -2,17 +2,13 @@ package com.yrun.presentation.premium
 
 import com.yrun.domain.premium.SaveResult
 import com.yrun.presentation.dashboard.DashboardScreen
-import com.yrun.presentation.main.Clear
 import com.yrun.presentation.main.Navigation
-import com.yrun.presentation.settings.SettingsViewModel
+import javax.inject.Inject
 
-class BasePremiumResultMapper(
-    private val navigation: Navigation.Navigate,
-    private val clear: Clear
+class BasePremiumResultMapper @Inject constructor(
+    private val navigation: Navigation.Mutable,
 ) : SaveResult.Mapper {
     override fun mapSuccessful() {
-        clear.clear(SettingsViewModel::class.java)
-        clear.clear(PremiumViewModel::class.java)
         navigation.updateUi(DashboardScreen)
     }
 

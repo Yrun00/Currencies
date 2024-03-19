@@ -3,7 +3,7 @@ package com.yrun.presentation.load
 import com.yrun.presentation.core.UiObservable
 import com.yrun.presentation.core.UpdateUi
 
-class FakeLoadUiObservable : UiObservable<LoadUiState> {
+class FakeLoadUiObservable : UiObservable<LoadUiState>, LoadUiObservable {
 
     var actual: LoadUiState = LoadUiState.Empty
     var observer: UpdateUi<LoadUiState> = UpdateUi.Empty()

@@ -2,11 +2,11 @@ package com.yrun.presentation.dashboard
 
 import com.yrun.domain.dashboard.DashboardItem
 import com.yrun.domain.dashboard.DashboardResult
-import com.yrun.presentation.core.UiObservable
 import com.yrun.presentation.dashboard.adapter.DashboardUi
+import javax.inject.Inject
 
-class BaseDashboardResultMapper(
-    private val observable: UiObservable<DashboardUiState>,
+class BaseDashboardResultMapper @Inject constructor(
+    private val observable: DashboardUiObservable,
     private val dashboardItemMapper: DashboardItem.Mapper<DashboardUi>
 ) : DashboardResult.Mapper {
 
@@ -29,7 +29,7 @@ class BaseDashboardResultMapper(
     }
 }
 
-class BaseDashboardItemMapper(private val concat: CurrencyPairUi.Concat) :
+class BaseDashboardItemMapper @Inject constructor(private val concat: CurrencyPairUi.Mutable) :
     DashboardItem.Mapper<DashboardUi> {
 
     override fun map(fromCurrency: String, toCurrency: String, rate: Double): DashboardUi {

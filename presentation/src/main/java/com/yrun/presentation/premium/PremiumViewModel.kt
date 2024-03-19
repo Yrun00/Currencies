@@ -4,23 +4,23 @@ import com.yrun.domain.premium.PremiumStorage
 import com.yrun.domain.premium.SaveResult
 import com.yrun.domain.premium.SettingsInteractor
 import com.yrun.presentation.main.BaseViewModel
-import com.yrun.presentation.main.Clear
 import com.yrun.presentation.main.Navigation
 import com.yrun.presentation.main.RunAsync
 import com.yrun.presentation.main.Screen
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class PremiumViewModel(
+@HiltViewModel
+class PremiumViewModel @Inject constructor(
     private val premiumStorage: PremiumStorage.Save,
-    private val navigation: Navigation.Navigate,
-    private val clear: Clear,
+    private val navigation: Navigation.Mutable,
     private val interactor: SettingsInteractor,
-    private val premiumMapper: SaveResult.Mapper = BasePremiumResultMapper(navigation, clear),
+    private val premiumMapper: SaveResult.Mapper = BasePremiumResultMapper(navigation),
     runAsync: RunAsync
 ) : BaseViewModel(runAsync) {
 
     fun backToSettings() {
         navigation.updateUi(Screen.Pop)
-        clear.clear(PremiumViewModel::class.java)
     }
 
     fun buyPremiumAndGoToDashboard(pair: Pair<String, String>) {

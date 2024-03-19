@@ -2,23 +2,22 @@ package com.yrun.presentation.load
 
 import com.yrun.domain.load.LoadCurrenciesRepository
 import com.yrun.domain.load.LoadCurrenciesResult
-import com.yrun.presentation.core.UiObservable
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.main.BaseViewModel
-import com.yrun.presentation.main.Clear
 import com.yrun.presentation.main.Navigation
 import com.yrun.presentation.main.RunAsync
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LoadViewModel(
+@HiltViewModel
+class LoadViewModel @Inject constructor(
     private val repository: LoadCurrenciesRepository,
-    private val uiObservable: UiObservable<LoadUiState>,
-    private val navigation: Navigation.Navigate,
-    private val clear: Clear,
+    private val uiObservable: LoadUiObservable,
+    private val navigation: Navigation.Mutable,
     runAsync: RunAsync,
     private val mapper: LoadCurrenciesResult.Mapper = BaseLoadResultMapper(
         uiObservable,
-        navigation,
-        clear
+        navigation
     )
 ) : BaseViewModel(runAsync) {
 

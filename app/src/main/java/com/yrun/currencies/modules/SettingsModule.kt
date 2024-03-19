@@ -1,32 +1,46 @@
 package com.yrun.currencies.modules
 
-import com.yrun.currencies.Core
 import com.yrun.currencies.ProvideInstance
 import com.yrun.data.dashboard.cache.FavoritePairsCacheDataSource
-import com.yrun.presentation.main.Clear
+import com.yrun.data.load.cache.CurrencyCacheDataSource
+import com.yrun.data.load.cache.CurrencyDao
+import com.yrun.domain.settings.SettingsRepository
 import com.yrun.presentation.settings.SettingsUiObservable
-import com.yrun.presentation.settings.SettingsViewModel
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-class SettingsModule(
-    private val core: Core,
-    private val clear: Clear,
-    private val provideInstance: ProvideInstance.ProvideRepository
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class SettingsModule {
 
-) : Module<SettingsViewModel> {
+    @Binds
+    abstract fun bindObservable(
+        observable: SettingsUiObservable.Base
+    ): SettingsUiObservable
 
-    override fun viewModel(): SettingsViewModel {
-        return SettingsViewModel(
-            navigation = core.provideNavigation(),
-            runAsync = core.provideRunAsync(),
-            clear = clear,
-            observable = SettingsUiObservable.Base(),
-            interactor = provideInstance.provideSettingsInteractor(
-                core.provideCurrencyDataBase().currencyDao(),
-                favoritePairsCacheDataSource = FavoritePairsCacheDataSource.Base(
-                    core.providePairDatabase().pairDao()
-                ), maxFreePairCount = provideInstance.provideMaxFreeSavedPairsCount(),
-                premiumStorage = core.providePremiumStorage()
-            )
+    @Binds
+    abstract fun bindAllCacheDataSource(
+        allCacheDataSource: CurrencyCacheDataSource.Base
+    ): CurrencyCacheDataSource.Read
+
+    @Binds
+    abstract fun bindFavoriteCacheDataSource(
+        favoriteCacheDataSource: FavoritePairsCacheDataSource.Base
+    ): FavoritePairsCacheDataSource.Mutable
+
+
+    companion object {
+        @Provides
+        fun provideRepository(
+            provideInstance: ProvideInstance,
+            currencyDao: CurrencyDao,
+            favoriteCurrenciesCacheDataSource: FavoritePairsCacheDataSource.Base
+        ): SettingsRepository = provideInstance.provideSettingsRepository(
+            favoritePairsCacheDataSource = favoriteCurrenciesCacheDataSource,
+            currencyDao = currencyDao
         )
     }
 }

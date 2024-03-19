@@ -9,9 +9,10 @@ import com.yrun.domain.dashboard.DashboardItem
 import com.yrun.domain.dashboard.DashboardRepository
 import com.yrun.domain.dashboard.DashboardResult
 import java.net.UnknownHostException
+import javax.inject.Inject
 
 
-class BaseDashboardRepository(
+class BaseDashboardRepository @Inject constructor(
     private val favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
     private val handleError: HandleError,
     private val dashboardItemsDataSource: DashboardItemsDataSource

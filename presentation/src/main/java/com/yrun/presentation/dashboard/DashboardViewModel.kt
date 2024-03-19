@@ -2,22 +2,22 @@ package com.yrun.presentation.dashboard
 
 import com.yrun.domain.dashboard.DashboardRepository
 import com.yrun.domain.dashboard.DashboardResult
-import com.yrun.presentation.core.UiObservable
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.main.BaseViewModel
-import com.yrun.presentation.main.Clear
 import com.yrun.presentation.main.Navigation
 import com.yrun.presentation.main.RunAsync
 import com.yrun.presentation.settings.SettingsScreen
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class DashboardViewModel(
-    private val navigation: Navigation.Navigate,
+@HiltViewModel
+class DashboardViewModel @Inject constructor(
+    private val navigation: Navigation.Mutable,
     runAsync: RunAsync,
-    private val clear: Clear,
     private val repository: DashboardRepository,
-    private val observable: UiObservable<DashboardUiState>,
+    private val observable: DashboardUiObservable,
     private val mapper: DashboardResult.Mapper,
-    private val derive: CurrencyPairUi.Derive
+    private val derive: CurrencyPairUi.Mutable
 ) : BaseViewModel(runAsync), ClickActions {
 
     fun load() {
@@ -38,7 +38,6 @@ class DashboardViewModel(
 
     fun goToSettings() {
         navigation.updateUi(SettingsScreen)
-        clear.clear(DashboardViewModel::class.java)
     }
 
     fun startGettingUpdates(observer: UpdateUi<DashboardUiState>) {

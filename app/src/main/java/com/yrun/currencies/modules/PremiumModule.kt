@@ -1,30 +1,47 @@
 package com.yrun.currencies.modules
 
-import com.yrun.currencies.Core
+import com.yrun.currencies.BasePremiumStorage
 import com.yrun.currencies.ProvideInstance
-import com.yrun.data.dashboard.cache.FavoritePairsCacheDataSource
-import com.yrun.presentation.main.Clear
-import com.yrun.presentation.premium.PremiumViewModel
+import com.yrun.domain.premium.PremiumStorage
+import com.yrun.domain.premium.SaveResult
+import com.yrun.domain.premium.SettingsInteractor
+import com.yrun.domain.settings.SettingsRepository
+import com.yrun.presentation.premium.BasePremiumResultMapper
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 
-class PremiumModule(
-    private val clear: Clear,
-    private val core: Core,
-    private val provideInstance: ProvideInstance.ProvideRepository
+@Module
+@InstallIn(ViewModelComponent::class)
+abstract class PremiumModule {
 
-) : Module<PremiumViewModel> {
-    override fun viewModel(): PremiumViewModel {
-        return PremiumViewModel(
-            clear = clear,
-            navigation = core.provideNavigation(),
-            premiumStorage = core.providePremiumStorage(),
-            interactor = provideInstance.provideSettingsInteractor(
-                core.provideCurrencyDataBase().currencyDao(),
-                premiumStorage = core.providePremiumStorage(),
-                maxFreePairCount = provideInstance.provideMaxFreeSavedPairsCount(),
-                favoritePairsCacheDataSource = FavoritePairsCacheDataSource.Base(
-                    core.providePairDatabase().pairDao()
-                )
-            ), runAsync = core.provideRunAsync()
+    @Binds
+    abstract fun bindSavePremiumStorage(
+        premiumStorage: BasePremiumStorage
+    ): PremiumStorage.Save
+
+    @Binds
+    abstract fun bindSettingsInteractor(
+        settingsInteractor: SettingsInteractor.Base
+    ): SettingsInteractor
+
+    @Binds
+    abstract fun bindPremiumResultMapper(
+        premiumResultMapper: BasePremiumResultMapper
+    ): SaveResult.Mapper
+
+    companion object {
+        @Provides
+        fun provideInteractor(
+            provideInstance: ProvideInstance,
+            repository: SettingsRepository,
+            premiumStorage: BasePremiumStorage
+        ) = SettingsInteractor.Base(
+            repository = repository,
+            premiumStorage = premiumStorage,
+            maxFreePairsCount = provideInstance.provideMaxFreeSavedPairsCount()
         )
     }
 }

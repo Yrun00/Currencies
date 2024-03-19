@@ -3,6 +3,7 @@ package com.yrun.presentation.main
 import com.yrun.presentation.core.UiObservable
 import com.yrun.presentation.core.UpdateObserver
 import com.yrun.presentation.core.UpdateUi
+import javax.inject.Inject
 
 
 interface Navigation {
@@ -13,7 +14,7 @@ interface Navigation {
 
     interface Mutable : Navigate, ObserveNavigation
 
-    object Base : UiObservable.Abstract<Screen>(Screen.Empty), Mutable
+    class Base @Inject constructor() : UiObservable.Abstract<Screen>(Screen.Empty), Mutable
 
 
 }
