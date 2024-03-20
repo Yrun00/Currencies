@@ -1,6 +1,7 @@
 package com.yrun.presentation.dashboard
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -11,6 +12,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.yrun.data.R
 import com.yrun.data.databinding.FragmentDashboardBinding
 import com.yrun.presentation.core.BaseFragment
+import com.yrun.presentation.core.BundleWrapper
+import com.yrun.presentation.core.BundleWrapper.Companion.RECYCLER
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.dashboard.adapter.DashboardAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +25,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
     private lateinit var updateUi: UpdateUi<DashboardUiState>
     private lateinit var adapter: DashboardAdapter
     private lateinit var snackBar: Snackbar
+    private var recyclerViewState: Parcelable? = null
 
     override val viewModel: DashboardViewModel by viewModels()
 
@@ -37,17 +41,24 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
 
         binding.dashboardRecyclerView.adapter = adapter
 
+        viewModel.init(savedInstanceState, binding)
+
         binding.settingButton.setOnClickListener {
             viewModel.goToSettings()
         }
-        updateUi = object : UpdateUi<DashboardUiState> {
-            override fun updateUi(uiState: DashboardUiState) {
-                uiState.update(showList = adapter)
+
+        updateUi =
+            object : UpdateUi<DashboardUiState> {
+                override fun updateUi(uiState: DashboardUiState) {
+                    uiState.update(showList = adapter)
+                }
             }
-        }
+    }
 
-        viewModel.load()
-
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        recyclerViewState = binding.dashboardRecyclerView.layoutManager?.onSaveInstanceState()
+        BundleWrapper.Base(outState).save(recyclerViewState, RECYCLER)
     }
 
     override fun deletePair(pairUi: String) {

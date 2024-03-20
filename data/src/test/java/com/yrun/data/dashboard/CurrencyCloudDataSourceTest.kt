@@ -1,4 +1,4 @@
-package com.yrun.data.load
+package com.yrun.data.dashboard
 
 import com.yrun.data.load.cloud.CurrencyCloudDataSource
 import com.yrun.data.load.cloud.CurrencyService

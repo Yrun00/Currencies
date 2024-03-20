@@ -1,7 +1,10 @@
 package com.yrun.presentation.dashboard
 
+import android.os.Bundle
+import com.yrun.data.databinding.FragmentDashboardBinding
 import com.yrun.domain.dashboard.DashboardRepository
 import com.yrun.domain.dashboard.DashboardResult
+import com.yrun.presentation.core.BundleWrapper
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.main.BaseViewModel
 import com.yrun.presentation.main.Navigation
@@ -25,6 +28,14 @@ class DashboardViewModel @Inject constructor(
         runAsync({
             repository.dashboard()
         }) { it.map(mapper) }
+    }
+
+    fun init(savedInstanceState: Bundle?, binding: FragmentDashboardBinding) {
+        if (savedInstanceState == null) load()
+        else {
+            val recyclerViewState = BundleWrapper.Base(savedInstanceState).restoreRecycler()
+            binding.dashboardRecyclerView.layoutManager?.onRestoreInstanceState(recyclerViewState)
+        }
     }
 
     override fun retry() = load()

@@ -90,7 +90,5 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         BundleWrapper.Base(outState).save(fromAdapter.selectedChoice(), FROM)
         BundleWrapper.Base(outState).save(toAdapter.selectedChoice(), TO)
     }
-
-
 }
 

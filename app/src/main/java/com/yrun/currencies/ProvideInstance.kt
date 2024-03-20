@@ -5,14 +5,11 @@ import com.yrun.data.dashboard.BaseDashboardRepository
 import com.yrun.data.dashboard.FakeDashboardRepository
 import com.yrun.data.dashboard.cache.DashboardItemsDataSource
 import com.yrun.data.dashboard.cache.FavoritePairsCacheDataSource
-import com.yrun.data.load.BaseLoadCurrencyRepository
-import com.yrun.data.load.FakeLoadCurrencyRepository
 import com.yrun.data.load.cache.CurrencyCacheDataSource
 import com.yrun.data.load.cache.CurrencyDao
 import com.yrun.data.load.cloud.CurrencyCloudDataSource
 import com.yrun.data.settings.BaseSettingsRepository
 import com.yrun.domain.dashboard.DashboardRepository
-import com.yrun.domain.load.LoadCurrenciesRepository
 import com.yrun.domain.premium.PremiumStorage
 import com.yrun.domain.premium.SettingsInteractor
 import com.yrun.domain.settings.SettingsRepository
@@ -23,12 +20,6 @@ interface ProvideInstance {
 
     fun provideMaxFreeSavedPairsCount(): Int
 
-    fun provideLoadRepository(
-        cacheDataSource: CurrencyCacheDataSource.Mutable,
-        cloudDataSource: CurrencyCloudDataSource,
-        handleError: HandleError.Base
-    ): LoadCurrenciesRepository
-
     fun provideSettingsRepository(
         currencyDao: CurrencyDao,
         favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
@@ -37,7 +28,9 @@ interface ProvideInstance {
     fun provideDashboardRepository(
         dashboardItemDataSource: DashboardItemsDataSource,
         favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
-        handleError: HandleError.Base
+        handleError: HandleError.Base,
+        cacheDataSource: CurrencyCacheDataSource.Mutable,
+        cloudDataSource: CurrencyCloudDataSource,
     ): DashboardRepository
 
     fun provideSettingsInteractor(
@@ -52,16 +45,6 @@ interface ProvideInstance {
 
         override fun provideMaxFreeSavedPairsCount(): Int = 5
 
-        override fun provideLoadRepository(
-            cacheDataSource: CurrencyCacheDataSource.Mutable,
-            cloudDataSource: CurrencyCloudDataSource,
-            handleError: HandleError.Base
-        ) = BaseLoadCurrencyRepository(
-            currencyCacheDataSource = cacheDataSource,
-            currencyCloudDataSource = cloudDataSource,
-            handleError = handleError
-        )
-
         override fun provideSettingsRepository(
             currencyDao: CurrencyDao,
             favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable
@@ -73,12 +56,16 @@ interface ProvideInstance {
         override fun provideDashboardRepository(
             dashboardItemDataSource: DashboardItemsDataSource,
             favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
-            handleError: HandleError.Base
+            handleError: HandleError.Base,
+            cacheDataSource: CurrencyCacheDataSource.Mutable,
+            cloudDataSource: CurrencyCloudDataSource,
         ): DashboardRepository =
             BaseDashboardRepository(
                 dashboardItemsDataSource = dashboardItemDataSource,
                 favoritePairsCacheDataSource = favoritePairsCacheDataSource,
-                handleError = handleError
+                handleError = handleError,
+                currencyCloudDataSource = cloudDataSource,
+                currencyCacheDataSource = cacheDataSource
             )
 
         override fun provideSettingsInteractor(
@@ -100,15 +87,6 @@ interface ProvideInstance {
     class Fake @Inject constructor() : ProvideInstance {
         override fun provideMaxFreeSavedPairsCount(): Int = 2
 
-        override fun provideLoadRepository(
-            cacheDataSource: CurrencyCacheDataSource.Mutable,
-            cloudDataSource: CurrencyCloudDataSource,
-            handleError: HandleError.Base
-        ): LoadCurrenciesRepository = FakeLoadCurrencyRepository(
-            currencyCacheDataSource = cacheDataSource,
-            handleError = handleError
-        )
-
         override fun provideSettingsRepository(
             currencyDao: CurrencyDao,
             favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable
@@ -120,11 +98,13 @@ interface ProvideInstance {
         override fun provideDashboardRepository(
             dashboardItemDataSource: DashboardItemsDataSource,
             favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
-            handleError: HandleError.Base
+            handleError: HandleError.Base,
+            cacheDataSource: CurrencyCacheDataSource.Mutable,
+            cloudDataSource: CurrencyCloudDataSource,
         ): DashboardRepository = FakeDashboardRepository(
-            dashboardItemsDataSource = dashboardItemDataSource,
             favoritePairsCacheDataSource = favoritePairsCacheDataSource,
-            handleError = handleError
+            handleError = handleError,
+            currencyCacheDataSource = cacheDataSource
         )
 
         override fun provideSettingsInteractor(
