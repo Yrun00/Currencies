@@ -6,6 +6,7 @@ import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.main.BaseViewModel
 import com.yrun.presentation.main.Navigation
 import com.yrun.presentation.main.RunAsync
+import com.yrun.presentation.main.log
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -20,6 +21,14 @@ class LoadViewModel @Inject constructor(
         navigation
     )
 ) : BaseViewModel(runAsync) {
+    init {
+        log("LoadViewModel created")
+    }
+
+    override fun onCleared() {
+        log("LoadViewModel destroyed")
+        super.onCleared()
+    }
 
     fun init(isFirstRun: Boolean) {
         if (isFirstRun) load()

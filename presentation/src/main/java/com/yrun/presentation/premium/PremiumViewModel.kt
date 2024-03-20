@@ -7,6 +7,7 @@ import com.yrun.presentation.main.BaseViewModel
 import com.yrun.presentation.main.Navigation
 import com.yrun.presentation.main.RunAsync
 import com.yrun.presentation.main.Screen
+import com.yrun.presentation.main.log
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -18,6 +19,15 @@ class PremiumViewModel @Inject constructor(
     private val premiumMapper: SaveResult.Mapper = BasePremiumResultMapper(navigation),
     runAsync: RunAsync
 ) : BaseViewModel(runAsync) {
+
+    init {
+        log("PremiumViewModel created")
+    }
+
+    override fun onCleared() {
+        log("PremiumViewModel destroyed")
+        super.onCleared()
+    }
 
     fun backToSettings() {
         navigation.updateUi(Screen.Pop)

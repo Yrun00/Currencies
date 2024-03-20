@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import com.yrun.data.databinding.FragmentPremiumBinding
 import com.yrun.presentation.core.BaseFragment
+import com.yrun.presentation.main.log
 import com.yrun.presentation.settings.FragmentInteraction
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +25,7 @@ class PremiumFragment : BaseFragment<FragmentPremiumBinding, PremiumViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        log("PremiumFragment onViewCreated")
 
 
 

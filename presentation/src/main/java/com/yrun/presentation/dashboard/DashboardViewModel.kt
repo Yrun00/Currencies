@@ -6,6 +6,7 @@ import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.main.BaseViewModel
 import com.yrun.presentation.main.Navigation
 import com.yrun.presentation.main.RunAsync
+import com.yrun.presentation.main.log
 import com.yrun.presentation.settings.SettingsScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -19,6 +20,16 @@ class DashboardViewModel @Inject constructor(
     private val mapper: DashboardResult.Mapper,
     private val derive: CurrencyPairUi.Mutable
 ) : BaseViewModel(runAsync), ClickActions {
+
+
+    override fun onCleared() {
+        log("DashboardViewModel destroyed")
+        super.onCleared()
+    }
+
+    init {
+        log("DashboardViewModel created")
+    }
 
     fun load() {
         observable.updateUi(DashboardUiState.Progress)

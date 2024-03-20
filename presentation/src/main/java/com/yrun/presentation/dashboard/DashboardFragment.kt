@@ -13,6 +13,7 @@ import com.yrun.data.databinding.FragmentDashboardBinding
 import com.yrun.presentation.core.BaseFragment
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.dashboard.adapter.DashboardAdapter
+import com.yrun.presentation.main.log
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,8 +31,14 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
     ): FragmentDashboardBinding =
         FragmentDashboardBinding.inflate(inflater, container, false)
 
+    override fun onDestroyView() {
+        log("DashboardFragment destroyed")
+        super.onDestroyView()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        log("DashboardFragment onViewCreated")
 
         adapter = DashboardAdapter(this)
 

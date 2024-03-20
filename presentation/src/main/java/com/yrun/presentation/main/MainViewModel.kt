@@ -11,6 +11,15 @@ class MainViewModel @Inject constructor(
     private val navigation: Navigation.Mutable
 ) : ViewModel() {
 
+    override fun onCleared() {
+        log("MainViewModel destroyed")
+        super.onCleared()
+    }
+
+    init {
+        log("MainViewModel created")
+    }
+
 
     fun init(isFirsRun: Boolean) {
         if (isFirsRun)

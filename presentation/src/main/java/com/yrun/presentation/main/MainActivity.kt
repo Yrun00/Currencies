@@ -1,6 +1,7 @@
 package com.yrun.presentation.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.yrun.data.R
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        log("MainActivity onCreate")
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -39,4 +41,8 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         viewModel.stopGettingUpdates()
     }
+}
+
+fun log(text: String) {
+    Log.d("Yrun123", text)
 }

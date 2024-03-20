@@ -12,6 +12,7 @@ import com.yrun.presentation.core.BundleWrapper
 import com.yrun.presentation.core.BundleWrapper.Companion.FROM
 import com.yrun.presentation.core.BundleWrapper.Companion.TO
 import com.yrun.presentation.core.UpdateUi
+import com.yrun.presentation.main.log
 import com.yrun.presentation.settings.adapter.SettingsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,8 +30,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     ): FragmentSettingsBinding =
         FragmentSettingsBinding.inflate(inflater, container, false)
 
+    override fun onDestroyView() {
+        log("SettingsFragment destroyed")
+        super.onDestroyView()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        log("SettingsFragment onViewCreated")
 
         binding.backButton.setOnClickListener {
             viewModel.backToDashboard()

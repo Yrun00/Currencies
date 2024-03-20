@@ -8,6 +8,7 @@ import com.yrun.presentation.dashboard.DashboardScreen
 import com.yrun.presentation.main.BaseViewModel
 import com.yrun.presentation.main.Navigation
 import com.yrun.presentation.main.RunAsync
+import com.yrun.presentation.main.log
 import com.yrun.presentation.premium.BasePremiumResultMapper
 import com.yrun.presentation.settings.adapter.ChoiceUi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,15 @@ class SettingsViewModel @Inject constructor(
     private val observable: SettingsUiObservable,
     private val premiumMapper: SaveResult.Mapper = BasePremiumResultMapper(navigation)
 ) : BaseViewModel(runAsync), CurrencyChoice {
+
+    init {
+        log("SettingsViewModel created")
+    }
+
+    override fun onCleared() {
+        log("SettingsViewModel destroyed")
+        super.onCleared()
+    }
 
     fun init(bundleWrapper: BundleWrapper.Mutable) {
         if (bundleWrapper.isEmpty()) {
