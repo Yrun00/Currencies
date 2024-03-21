@@ -18,7 +18,6 @@ interface BundleWrapper {
 
         fun restoreFrom(): String
 
-        fun restoreRecycler(): Parcelable?
 
     }
 
@@ -43,14 +42,11 @@ interface BundleWrapper {
 
         override fun restoreFrom(): String = restore(FROM)
 
-        override fun restoreRecycler(): Parcelable? {
-            return bundle?.getParcelable(RECYCLER)
-        }
+
     }
 
     companion object {
         const val FROM = "fromSelectedId"
         const val TO = "toSelectedId"
-        const val RECYCLER = "recycler_state"
     }
 }

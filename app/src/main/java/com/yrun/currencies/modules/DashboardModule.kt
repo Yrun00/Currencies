@@ -16,6 +16,7 @@ import com.yrun.presentation.dashboard.BaseDashboardItemMapper
 import com.yrun.presentation.dashboard.BaseDashboardResultMapper
 import com.yrun.presentation.dashboard.CurrencyPairUi
 import com.yrun.presentation.dashboard.DashboardUiObservable
+import com.yrun.presentation.dashboard.HandleDeath
 import com.yrun.presentation.dashboard.adapter.DashboardUi
 import dagger.Binds
 import dagger.Module
@@ -80,6 +81,9 @@ abstract class DashboardModule {
     companion object {
         @Provides
         fun provideCurrencyPairUi(): CurrencyPairUi.Base = CurrencyPairUi.Base(separator = "/")
+
+        @Provides
+        fun provideHandleDeath(): HandleDeath = HandleDeath.Base()
 
         @Provides
         fun provideDispatcherIO(): CoroutineDispatcher = Dispatchers.IO

@@ -21,7 +21,7 @@ abstract class CoreModule {
 
     @Binds
     @Singleton
-    abstract fun bindProvideInstances(provideInstance: ProvideInstance.Fake): ProvideInstance
+    abstract fun bindProvideInstances(provideInstance: ProvideInstance.Base): ProvideInstance
 
     @Binds
     @Singleton
