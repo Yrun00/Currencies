@@ -2,7 +2,7 @@ package com.yrun.presentation.main
 
 import androidx.lifecycle.ViewModel
 import com.yrun.presentation.core.UpdateUi
-import com.yrun.presentation.load.LoadScreen
+import com.yrun.presentation.dashboard.DashboardScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ class MainViewModel @Inject constructor(
 
     fun init(isFirsRun: Boolean) {
         if (isFirsRun)
-            navigation.updateUi(LoadScreen)
+            navigation.updateUi(DashboardScreen)
     }
 
     fun startGettingUpdates(navigation: UpdateUi<Screen>) {

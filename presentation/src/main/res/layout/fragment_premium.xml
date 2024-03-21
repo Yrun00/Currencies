@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/premiumLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:gravity="center"
-    android:orientation="horizontal">
+    android:background="#FFFFFF"
+    android:orientation="vertical">
 
     <com.yrun.presentation.core.views.CustomImageButton
         android:id="@+id/backToSettingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:contentDescription="@string/back"
-        android:src="@drawable/baseline_arrow_back_48" />
+        android:src="@drawable/baseline_arrow_back_48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!--todo top right-->
     <com.yrun.presentation.core.views.CustomButton
         android:id="@+id/buyPremiumButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:text="@string/buy_premium" />
+        android:text="@string/buy_premium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backToSettingsButton" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

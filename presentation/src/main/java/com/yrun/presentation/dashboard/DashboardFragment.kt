@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.yrun.data.R
 import com.yrun.data.databinding.FragmentDashboardBinding
 import com.yrun.presentation.core.BaseFragment
+import com.yrun.presentation.core.BundleWrapper
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.dashboard.adapter.DashboardAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,17 +38,18 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
 
         binding.dashboardRecyclerView.adapter = adapter
 
+        viewModel.init(BundleWrapper.Base(savedInstanceState))
+
         binding.settingButton.setOnClickListener {
             viewModel.goToSettings()
         }
-        updateUi = object : UpdateUi<DashboardUiState> {
-            override fun updateUi(uiState: DashboardUiState) {
-                uiState.update(showList = adapter)
+
+        updateUi =
+            object : UpdateUi<DashboardUiState> {
+                override fun updateUi(uiState: DashboardUiState) {
+                    uiState.update(showList = adapter)
+                }
             }
-        }
-
-        viewModel.load()
-
     }
 
     override fun deletePair(pairUi: String) {
