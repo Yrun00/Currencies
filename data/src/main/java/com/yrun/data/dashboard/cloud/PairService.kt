@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface PairService {
 
-    @GET("latest")
+    @GET("v1/latest")
 
     fun loadPair(
         @Query("from") fromCurrency: String,

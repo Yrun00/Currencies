@@ -4,8 +4,9 @@ import com.yrun.data.dashboard.cache.FavoritePairsCacheDataSource
 import com.yrun.data.dashboard.cache.PairCache
 import com.yrun.data.load.cache.CurrencyDao
 import com.yrun.domain.settings.SettingsRepository
+import javax.inject.Inject
 
-class BaseSettingsRepository(
+class BaseSettingsRepository @Inject constructor(
     private val currencyDao: CurrencyDao,
     private val favoritePairsCacheDataSource: FavoritePairsCacheDataSource.Mutable,
 ) : SettingsRepository {

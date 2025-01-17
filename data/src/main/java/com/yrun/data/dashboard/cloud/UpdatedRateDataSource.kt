@@ -3,12 +3,13 @@ package com.yrun.data.dashboard.cloud
 import com.yrun.data.core.CurrentTimeInMillis
 import com.yrun.data.dashboard.cache.FavoritePairsCacheDataSource
 import com.yrun.data.dashboard.cache.PairCache
+import javax.inject.Inject
 
 interface UpdatedRateDataSource {
 
     suspend fun updatedRate(currentPair: PairCache): Double
 
-    class Base(
+    class Base @Inject constructor(
         private val currentTimeInMillis: CurrentTimeInMillis,
         private val cacheDataSource: FavoritePairsCacheDataSource.Save,
         private val pairClodDataSource: PairClodDataSource

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import com.yrun.data.databinding.FragmentSettingsBinding
 import com.yrun.presentation.core.BaseFragment
 import com.yrun.presentation.core.BundleWrapper
@@ -12,14 +13,16 @@ import com.yrun.presentation.core.BundleWrapper.Companion.FROM
 import com.yrun.presentation.core.BundleWrapper.Companion.TO
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.settings.adapter.SettingsAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel>() {
 
     private lateinit var updateUi: UpdateUi<SettingsUiState>
     private lateinit var fromAdapter: SettingsAdapter
     private lateinit var toAdapter: SettingsAdapter
 
-    override val viewModelClass: Class<SettingsViewModel> = SettingsViewModel::class.java
+    override val viewModel: SettingsViewModel by viewModels()
 
     override fun inflate(
         inflater: LayoutInflater, container: ViewGroup?
@@ -87,7 +90,5 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         BundleWrapper.Base(outState).save(fromAdapter.selectedChoice(), FROM)
         BundleWrapper.Base(outState).save(toAdapter.selectedChoice(), TO)
     }
-
-
 }
 

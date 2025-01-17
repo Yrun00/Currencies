@@ -2,22 +2,24 @@ package com.yrun.presentation.dashboard
 
 import com.yrun.domain.dashboard.DashboardRepository
 import com.yrun.domain.dashboard.DashboardResult
-import com.yrun.presentation.core.UiObservable
+import com.yrun.presentation.core.BundleWrapper
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.main.BaseViewModel
-import com.yrun.presentation.main.Clear
 import com.yrun.presentation.main.Navigation
 import com.yrun.presentation.main.RunAsync
 import com.yrun.presentation.settings.SettingsScreen
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class DashboardViewModel(
-    private val navigation: Navigation.Navigate,
+@HiltViewModel
+class DashboardViewModel @Inject constructor(
+    private val navigation: Navigation.Mutable,
     runAsync: RunAsync,
-    private val clear: Clear,
     private val repository: DashboardRepository,
-    private val observable: UiObservable<DashboardUiState>,
+    private val observable: DashboardUiObservable,
     private val mapper: DashboardResult.Mapper,
-    private val derive: CurrencyPairUi.Derive
+    private val derive: CurrencyPairUi.Mutable,
+    private val handleDeath: HandleDeath
 ) : BaseViewModel(runAsync), ClickActions {
 
     fun load() {
@@ -25,6 +27,20 @@ class DashboardViewModel(
         runAsync({
             repository.dashboard()
         }) { it.map(mapper) }
+    }
+
+    fun init(wrapper: BundleWrapper.Mutable) {
+        if (wrapper.isEmpty()) { //Самое первое открытие фрагмента - поэтому бандл = нулл,
+            load()
+            handleDeath.firstTime()
+
+        } else { // Или произошла смерть активити или процесса, если пришёл новый хэндл деаз - под капотом будет deathHappened = true
+            if (handleDeath.deathHappened()) {
+                handleDeath.reset()
+                load()
+            }
+//            else  пересоздалось активити(но т.к. кеш в обсервалбе остался - данные прилетят.)
+        }
     }
 
     override fun retry() = load()
@@ -38,7 +54,6 @@ class DashboardViewModel(
 
     fun goToSettings() {
         navigation.updateUi(SettingsScreen)
-        clear.clear(DashboardViewModel::class.java)
     }
 
     fun startGettingUpdates(observer: UpdateUi<DashboardUiState>) {
@@ -47,5 +62,32 @@ class DashboardViewModel(
 
     fun stopGettingUpdates() {
         observable.updateObserver(UpdateUi.Empty())
+    }
+}
+
+
+interface HandleDeath {
+
+    fun firstTime()
+
+    fun reset()
+
+    fun deathHappened(): Boolean
+
+    class Base : HandleDeath {
+
+        private var deathHappened = true
+
+        override fun firstTime() {
+            deathHappened = false
+        }
+
+        override fun reset() {
+            deathHappened = false
+        }
+
+        override fun deathHappened(): Boolean {
+            return deathHappened
+        }
     }
 }

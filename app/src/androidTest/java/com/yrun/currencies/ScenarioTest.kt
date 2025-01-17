@@ -4,7 +4,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.yrun.presentation.main.MainActivity
 import com.yrun.presentation.page_objects.DashboardPage
-import com.yrun.presentation.page_objects.LoadPage
 import com.yrun.presentation.page_objects.PremiumPage
 import com.yrun.presentation.page_objects.SettingsPage
 import com.yrun.presentation.page_objects.SnackbarPage
@@ -25,12 +24,9 @@ class ScenarioTest {
         val dashboardPage = DashboardPage()
         val settingsPage = SettingsPage()
         val snackbarPage = SnackbarPage()
-        val loadPage = LoadPage()
 
-        loadPage.checkError("No internet connection")
+        dashboardPage.checkErrorVisible("No internet connection")
         activityScenarioRule.scenario.recreate()
-        loadPage.checkError("No internet connection")
-        loadPage.clickRetry()
         dashboardPage.checkErrorVisible("No internet connection")
         dashboardPage.clickRetry()
         dashboardPage.checkEmpty()

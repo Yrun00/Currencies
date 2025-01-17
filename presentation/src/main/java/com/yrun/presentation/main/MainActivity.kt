@@ -1,17 +1,18 @@
 package com.yrun.presentation.main
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.yrun.data.R
 import com.yrun.data.databinding.ActivityMainBinding
-import com.yrun.presentation.core.ProvideViewModel
 import com.yrun.presentation.core.UpdateUi
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity(), ProvideViewModel {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
     private lateinit var navigationObserver: UpdateUi<Screen>
-    private lateinit var viewModel: MainViewModel
-
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +20,6 @@ class MainActivity : AppCompatActivity(), ProvideViewModel {
         setContentView(binding.root)
         R.id.errorTextView
 
-        viewModel = viewModel(MainViewModel::class.java)
 
         navigationObserver = object : UpdateUi<Screen> {
             override fun updateUi(uiState: Screen) {
@@ -39,9 +39,4 @@ class MainActivity : AppCompatActivity(), ProvideViewModel {
         super.onPause()
         viewModel.stopGettingUpdates()
     }
-
-
-    override fun <T : CustomViewModel> viewModel(clazz: Class<T>) =
-        (application as ProvideViewModel).viewModel(clazz)
-
 }

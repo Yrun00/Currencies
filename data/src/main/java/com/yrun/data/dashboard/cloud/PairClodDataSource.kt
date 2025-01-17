@@ -1,7 +1,7 @@
 package com.yrun.data.dashboard.cloud
 
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 interface PairClodDataSource {
 
@@ -10,18 +10,13 @@ interface PairClodDataSource {
         fromCurrency: String
     ): Double
 
-    class Base(
+    class Base @Inject constructor(
         private val service: PairService,
     ) : PairClodDataSource {
 
-        constructor() : this(
-            Retrofit.Builder().baseUrl("https://api.frankfurter.app/")
-                .addConverterFactory(GsonConverterFactory.create()).build()
-                .create(PairService::class.java)
-        )
+        constructor(retrofit: Retrofit) : this(retrofit.create(PairService::class.java))
 
         override suspend fun rate(
-
             toCurrency: String,
             fromCurrency: String
         ): Double {

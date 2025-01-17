@@ -5,7 +5,7 @@ import retrofit2.http.GET
 
 interface CurrencyService {
 
-    @GET("currencies")
+    @GET("v1/currencies")
     fun loadCurrencies() : Call<HashMap<String,String>>
 
 }

@@ -1,20 +1,21 @@
 package com.yrun.data.dashboard
 
-import com.yrun.data.dashboard.cloud.PairClodDataSource
-import com.yrun.data.dashboard.cloud.PairService
+import com.yrun.data.load.cloud.CurrencyCloudDataSource
+import com.yrun.data.load.cloud.CurrencyService
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class PairCloudTest {
+
+class CurrencyCloudDataSourceTest {
 
     @Test
-    fun pairServiceTest() = runBlocking {
-        val actual = PairClodDataSource.Base(
+    fun currencyServiceTest() = runBlocking {
+        val actual = CurrencyCloudDataSource.Base(
             Retrofit.Builder()
                 .baseUrl("https://www.frankfurter.app/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -23,8 +24,8 @@ class PairCloudTest {
                         .addInterceptor(HttpLoggingInterceptor().apply {
                             setLevel(HttpLoggingInterceptor.Level.BODY)
                         }).build()
-                ).build().create(PairService::class.java)
-        ).rate("USD", "EUR")
-        Assert.assertEquals(1.0, actual, 0.15)
+                ).build().create(CurrencyService::class.java)
+        ).currencies()
+        assertEquals(true, actual.isNotEmpty())
     }
 }
