@@ -2,11 +2,12 @@ package com.yrun.presentation.dashboard.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.yrun.data.databinding.EmptyFavoitesBinding
-import com.yrun.data.databinding.ErrorBinding
-import com.yrun.data.databinding.PairBinding
-import com.yrun.data.databinding.ProgressBinding
+
 import com.yrun.presentation.dashboard.ClickActions
+import com.yrun.presentation.databinding.EmptyFavoitesBinding
+import com.yrun.presentation.databinding.ErrorBinding
+import com.yrun.presentation.databinding.PairBinding
+import com.yrun.presentation.databinding.ProgressBinding
 
 interface DashboardTypeUi {
 

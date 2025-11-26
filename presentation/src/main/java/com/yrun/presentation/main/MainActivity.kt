@@ -3,9 +3,9 @@ package com.yrun.presentation.main
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.yrun.data.R
-import com.yrun.data.databinding.ActivityMainBinding
+import com.yrun.presentation.R
 import com.yrun.presentation.core.UpdateUi
+import com.yrun.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -7,7 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import com.yrun.data.R
+import com.yrun.presentation.R
 import org.hamcrest.CoreMatchers.allOf
 
 class PremiumPage {

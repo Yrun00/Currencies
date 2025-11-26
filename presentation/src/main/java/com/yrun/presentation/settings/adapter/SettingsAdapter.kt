@@ -4,8 +4,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.yrun.data.databinding.ChoiceBinding
-import com.yrun.data.databinding.EmptyDestinationBinding
+import com.yrun.presentation.databinding.ChoiceBinding
+import com.yrun.presentation.databinding.EmptyDestinationBinding
 import com.yrun.presentation.core.ShowList
 
 class SettingsAdapter(

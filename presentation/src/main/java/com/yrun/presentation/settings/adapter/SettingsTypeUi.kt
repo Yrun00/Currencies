@@ -2,8 +2,8 @@ package com.yrun.presentation.settings.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.yrun.data.databinding.ChoiceBinding
-import com.yrun.data.databinding.EmptyDestinationBinding
+import com.yrun.presentation.databinding.ChoiceBinding
+import com.yrun.presentation.databinding.EmptyDestinationBinding
 
 interface SettingsTypeUi {
 

@@ -1,6 +1,6 @@
 package com.yrun.presentation.settings.adapter
 
-import com.yrun.data.databinding.EmptyDestinationBinding
+import com.yrun.presentation.databinding.EmptyDestinationBinding
 import com.yrun.presentation.core.views.ChangeText
 import com.yrun.presentation.core.views.ChangeVisibility
 

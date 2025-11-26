@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
-import com.yrun.data.databinding.FragmentSettingsBinding
+import com.yrun.presentation.databinding.FragmentSettingsBinding
 import com.yrun.presentation.core.BaseFragment
 import com.yrun.presentation.core.BundleWrapper
 import com.yrun.presentation.core.BundleWrapper.Companion.FROM

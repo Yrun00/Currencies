@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.yrun.data.R
-import com.yrun.data.databinding.FragmentDashboardBinding
+import com.yrun.presentation.R
 import com.yrun.presentation.core.BaseFragment
 import com.yrun.presentation.core.BundleWrapper
 import com.yrun.presentation.core.UpdateUi
 import com.yrun.presentation.dashboard.adapter.DashboardAdapter
+import com.yrun.presentation.databinding.FragmentDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

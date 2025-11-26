@@ -1,7 +1,8 @@
 package com.yrun.presentation.dashboard.adapter
 
-import com.yrun.data.databinding.ErrorBinding
-import com.yrun.data.databinding.PairBinding
+
+import com.yrun.presentation.databinding.ErrorBinding
+import com.yrun.presentation.databinding.PairBinding
 
 interface DashboardUi {
 

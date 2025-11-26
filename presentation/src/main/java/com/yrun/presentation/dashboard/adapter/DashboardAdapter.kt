@@ -4,13 +4,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.yrun.data.databinding.EmptyFavoitesBinding
-import com.yrun.data.databinding.ErrorBinding
-import com.yrun.data.databinding.PairBinding
-import com.yrun.data.databinding.ProgressBinding
 import com.yrun.presentation.core.ShowList
 import com.yrun.presentation.dashboard.ClickActions
 import com.yrun.presentation.dashboard.PairsDiffUtilCallback
+import com.yrun.presentation.databinding.EmptyFavoitesBinding
+import com.yrun.presentation.databinding.ErrorBinding
+import com.yrun.presentation.databinding.PairBinding
+import com.yrun.presentation.databinding.ProgressBinding
 
 class DashboardAdapter(
     private val clickListener: ClickActions,
